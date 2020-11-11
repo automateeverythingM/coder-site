@@ -1,0 +1,61 @@
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Color system
+
+$white: whitesmoke;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #202122;
+$black: #000;
+
+$blue: #007bff;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #e01921;
+$redOpacity: #771114;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+
+$primary: $blue;
+$secondary: $gray-600;
+$success: $green;
+$info: $cyan;
+$warning: $yellow;
+$danger: $red;
+$light: $gray-100;
+$dark: $gray-900;
+
+// $component-active-bg: theme-color("#202122");
+$dropdown-link-hover-bg: $gray-500;
+
+.clear-input {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  background: whitesmoke;
+  cursor: pointer;
+  color: $danger;
+  &:hover {
+    color: $redOpacity;
+  }
+  &:active {
+    color: $danger;
+    font-size: 1.4em;
+  }
+}
+
+@import "~bootstrap/scss/bootstrap.scss";

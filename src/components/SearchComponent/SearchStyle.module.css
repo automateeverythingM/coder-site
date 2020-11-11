@@ -1,0 +1,13 @@
+.clear-input {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  background: whitesmoke;
+  cursor: pointer;
+}
+
+.clear-input:hover {
+  filter: brightness(1.2);
+  -webkit-filter: brightness(1.2);
+}

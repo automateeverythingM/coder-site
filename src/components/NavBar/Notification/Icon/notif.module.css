@@ -1,0 +1,23 @@
+.notif {
+  position: relative;
+}
+
+.notif-icon {
+  display: inline-block;
+
+  color: white;
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 0.7rem;
+  padding: 0.25rem;
+
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
