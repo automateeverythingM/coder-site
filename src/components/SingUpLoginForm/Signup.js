@@ -27,7 +27,10 @@ export default function Signup() {
             <Form.Label>Username</Form.Label>
             <Form.Control
               name="username"
-              ref={register({ required: true })}
+              ref={register({
+                required: "Username is required",
+                minLength: { value: 5, message: "Minimum length is 5" },
+              })}
               type="text"
               placeholder="Enter username"
             />
@@ -38,7 +41,7 @@ export default function Signup() {
             <Form.Label>Email</Form.Label>
             <Form.Control
               name="email"
-              ref={register({ required: true })}
+              ref={register({ required: "Email is required" })}
               type="email"
               placeholder="Enter email"
             />
@@ -47,7 +50,7 @@ export default function Signup() {
             <Form.Label>Password</Form.Label>
             <Form.Control
               name="password"
-              ref={register({ required: true })}
+              ref={register({ required: "Password is required" })}
               type="password"
               placeholder="Password"
             />
@@ -56,7 +59,7 @@ export default function Signup() {
             <Form.Label>Confirm password</Form.Label>
             <Form.Control
               name="confirmPassword"
-              ref={register({ required: true })}
+              ref={register({ required: "Please confirm password" })}
               type="password"
               placeholder="Confirm password"
             />
