@@ -1,24 +1,22 @@
-import { Container } from "react-bootstrap";
 import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
-import HeroSearch from "./components/Hero/HeroSearch";
-import HeroRejected from "./components/Hero/HeroRejected";
-import HeroPractice from "./components/Hero/HeroPractice";
-
+import Home from "./components/Pages/Home";
+import { Signup, Login } from "./components/SingUpLoginForm";
 function App() {
   return (
-    <div>
+    <Router>
       <header>
         <Navbar />
       </header>
       <main>
-        <HeroSearch />
-
-        <HeroRejected />
-
-        <HeroPractice />
+        <Switch>
+          <Home exact path="/" />
+          <Signup exact path="/signup" />
+          <Login exact path="/login" />
+        </Switch>
       </main>
-    </div>
+    </Router>
   );
 }
 

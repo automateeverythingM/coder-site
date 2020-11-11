@@ -1,0 +1,25 @@
+.singupFormWrapper {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.singupContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 5rem;
+}
+
+.singupForm {
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  -webkit-border-radius: 1rem;
+  -moz-border-radius: 1rem;
+  -ms-border-radius: 1rem;
+  -o-border-radius: 1rem;
+}
+
+.singupContainer button {
+  margin-top: 2rem;
+}

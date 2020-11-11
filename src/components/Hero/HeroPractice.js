@@ -8,9 +8,9 @@ export default function HeroPractice() {
       <div className="container mx-auto text-center">
         <div></div>
         <div>
-          <h2 className="display-3">Lights on yours ideas</h2>
+          <h2 className="display-3 text-dark">Lights on your ideas</h2>
           <h2>No company takes money from you</h2>
-          <h3>Build your team and freelance</h3>{" "}
+          <h3>Build your team and freelance</h3>
           <Button size="lg" variant="secondary">
             Create Team
           </Button>
