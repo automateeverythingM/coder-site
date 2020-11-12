@@ -14,16 +14,20 @@ export default function Signup() {
     getValues,
   } = useForm({});
   const [asyncCallInProgress, setAsyncCallInProgress] = useState(false);
-  const [asyncCallPass, setAsyncCallPass] = useState(false);
+  const [usernameValidatePass, setUsernameValidatePass] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const namesArray = ["marko", "nikola", "relja", "dusan", "djordje"];
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    setSubmitting(true);
+    await sleep(1000);
+    setSubmitting(false);
     console.log("onSubmit -> data", data);
   };
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
   const uniqueUsernameCheck = async (name) => {
-    setAsyncCallPass(false);
+    setUsernameValidatePass(false);
 
     clearErrors(["username"]);
     if (name.length < 5) return;
@@ -31,7 +35,7 @@ export default function Signup() {
     const isUserUnique = !namesArray.includes(name);
     await sleep(2000);
     setAsyncCallInProgress(false);
-    setAsyncCallPass(isUserUnique);
+    setUsernameValidatePass(isUserUnique);
     if (!isUserUnique)
       setError("username", {
         type: "manual",
@@ -63,10 +67,7 @@ export default function Signup() {
                   required: "Username is required",
                   minLength: { value: 5, message: "Minimum length is 5" },
                   validate: async (value) => {
-                    const b =
-                      (await uniqueUsernameCheck(value)) ||
-                      "Username is already taken";
-                    return b;
+                    return usernameValidatePass || "Username is already taken";
                   },
                 })}
                 type="text"
@@ -74,9 +75,9 @@ export default function Signup() {
                 onChange={(e) => uniqueUsernameCheck(e.target.value)}
                 isInvalid={errors.username && !asyncCallInProgress}
               />
-              {(asyncCallInProgress || asyncCallPass) && (
+              {(asyncCallInProgress || usernameValidatePass) && (
                 <InputGroup.Append className="d-flex align-items-center bg-white rounded-right px-2">
-                  {asyncCallPass ? (
+                  {usernameValidatePass ? (
                     <HiCheckCircle color="green" />
                   ) : (
                     <Spinner
@@ -152,8 +153,12 @@ export default function Signup() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Button block variant="danger" type="submit">
-            Register
+          <Button disabled={submitting} block variant="danger" type="submit">
+            {submitting ? (
+              <Spinner animation="border" variant="white" />
+            ) : (
+              "Register"
+            )}
           </Button>
         </Form>
       </div>
