@@ -5,7 +5,14 @@ import { useForm } from "react-hook-form";
 import { HiCheckCircle } from "react-icons/hi";
 
 export default function Signup() {
-  const { register, handleSubmit, setError, errors, getValues } = useForm({});
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    errors,
+    getValues,
+  } = useForm({});
   const [asyncCallInProgress, setAsyncCallInProgress] = useState(false);
   const [asyncCallPass, setAsyncCallPass] = useState(false);
   const namesArray = ["marko", "nikola", "relja", "dusan", "djordje"];
@@ -15,9 +22,10 @@ export default function Signup() {
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
-  const uniqueUsernameCheck = async (e) => {
-    const name = e.target.value;
+  const uniqueUsernameCheck = async (name) => {
     setAsyncCallPass(false);
+
+    clearErrors(["username"]);
     if (name.length < 5) return;
     setAsyncCallInProgress(true);
     const isUserUnique = !namesArray.includes(name);
@@ -29,10 +37,10 @@ export default function Signup() {
         type: "manual",
         message: "Username is already taken",
       });
+
+    return isUserUnique;
   };
 
-  console.log("Signup -> errors", errors);
-  console.log("Signup -> errors.username", errors?.username?.message);
   return (
     <Container className={classes.signupContainer}>
       <h1>Create account</h1>
@@ -47,25 +55,23 @@ export default function Signup() {
         >
           <Form.Group>
             <Form.Label>Username</Form.Label>
-            <InputGroup>
+            <InputGroup className="rounded-right overflow-hidden">
               <Form.Control
-                className="border-right-0 shadow-none border-0"
+                className="border-right-0 shadow-none border-0 rounded-right"
                 name="username"
                 ref={register({
                   required: "Username is required",
                   minLength: { value: 5, message: "Minimum length is 5" },
                   validate: async (value) => {
-                    setAsyncCallInProgress(true);
-                    await sleep(2000);
-                    const isUserUnique = namesArray.includes(value);
-                    setAsyncCallInProgress(false);
-                    setAsyncCallPass(isUserUnique);
-                    return isUserUnique || "Username is already taken";
+                    const b =
+                      (await uniqueUsernameCheck(value)) ||
+                      "Username is already taken";
+                    return b;
                   },
                 })}
                 type="text"
                 placeholder="Enter username"
-                onChange={uniqueUsernameCheck}
+                onChange={(e) => uniqueUsernameCheck(e.target.value)}
                 isInvalid={errors.username && !asyncCallInProgress}
               />
               {(asyncCallInProgress || asyncCallPass) && (
