@@ -1,9 +1,9 @@
-.singupFormWrapper {
+.signupFormWrapper {
   width: 60%;
   margin: 0 auto;
 }
 
-.singupContainer {
+.signupContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,7 +11,7 @@
   margin-top: 5rem;
 }
 
-.singupForm {
+.signupForm {
   padding: 2rem 1.5rem;
   border-radius: 1rem;
   -webkit-border-radius: 1rem;
@@ -20,6 +20,6 @@
   -o-border-radius: 1rem;
 }
 
-.singupContainer button {
+.signupContainer button {
   margin-top: 2rem;
 }
