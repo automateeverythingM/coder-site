@@ -61,6 +61,7 @@ export default function Login() {
                         size="md"
                         variant="danger"
                         spinnerProps={{ animation: "border", variant: "white" }}
+                        onClick={() => {}}
                     >
                         Login
                     </ButtonWithLoadingDisable>
