@@ -7,6 +7,7 @@ import HeroPractice from "../../Hero/HeroPractice";
 import HeroRejected from "../../Hero/HeroRejected";
 import HeroSearch from "../../Hero/HeroSearch";
 import { store } from "react-notifications-component";
+import "animate.css/animate.compat.css";
 
 const style = css`
     position: relative;
@@ -30,14 +31,21 @@ export default function index() {
                         title: "Wonderful!",
                         message: "teodosii@react-notifications-component",
                         type: "info",
-                        insert: "top",
+                        insert: "bottom",
                         container: "top-right",
-                        animationIn: ["animate__animated", "animate__fadeIn"],
-                        animationOut: ["animate__animated", "animate__fadeOut"],
+                        animationIn: [
+                            "animate__animated",
+                            "animate__jackInTheBox",
+                        ],
+                        animationOut: [
+                            "animate__animated",
+                            "animate__slideOutRight",
+                        ],
                         dismiss: {
-                            duration: 5000,
+                            duration: 2000,
                             pauseOnHover: true,
                         },
+
                         onRemoval: (id, removedBy) => {
                             console.log("index -> removedBy", removedBy);
                             console.log("index -> id", id);
