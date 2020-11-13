@@ -40,7 +40,7 @@ export default function index() {
                             "animate__slideOutRight",
                         ],
                         dismiss: {
-                            duration: 2000,
+                            duration: 3000,
                             pauseOnHover: true,
                         },
                         slidingExit: {
