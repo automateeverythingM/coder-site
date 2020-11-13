@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { ImGithub } from "react-icons/im";
-import ButtonWithLoadingDisable from "../UI/ButtonWithLoadingDisable";
-import SignInButton from "../UI/SingInButton";
+import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
+import SignInButton from "../UI/Buttons/SingInButton";
 import sleep from "./sleep";
 
 const container = css`

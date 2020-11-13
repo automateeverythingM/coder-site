@@ -8,6 +8,7 @@ import HeroRejected from "../../Hero/HeroRejected";
 import HeroSearch from "../../Hero/HeroSearch";
 import { store } from "react-notifications-component";
 import "animate.css/animate.compat.css";
+import NotificationItemPopUp from "../../UI/Notification/NotificationItemPopUp";
 
 const style = css`
     position: relative;
@@ -33,10 +34,7 @@ export default function index() {
                         type: "info",
                         insert: "bottom",
                         container: "top-right",
-                        animationIn: [
-                            "animate__animated",
-                            "animate__jackInTheBox",
-                        ],
+                        animationIn: ["animate__animated", "animate__flipInX"],
                         animationOut: [
                             "animate__animated",
                             "animate__slideOutRight",
@@ -45,11 +43,19 @@ export default function index() {
                             duration: 2000,
                             pauseOnHover: true,
                         },
-
+                        slidingExit: {
+                            duration: 0,
+                            timingFunction: "ease-out",
+                            delay: 1000,
+                        },
+                        width: 400,
                         onRemoval: (id, removedBy) => {
                             console.log("index -> removedBy", removedBy);
                             console.log("index -> id", id);
                         },
+                        content: (
+                            <NotificationItemPopUp imgSrc="https://picsum.photos/50" />
+                        ),
                     });
                 }}
                 css={button}

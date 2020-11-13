@@ -8,8 +8,8 @@ import { FcGoogle } from "react-icons/fc";
 import sleep from "./sleep";
 
 import GitHubLogin from "react-github-login";
-import SignInButton from "../UI/SingInButton";
-import ButtonWithLoadingDisable from "../UI/ButtonWithLoadingDisable";
+import SignInButton from "../UI/Buttons/SingInButton";
+import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 
 export default function Signup() {
     const {
