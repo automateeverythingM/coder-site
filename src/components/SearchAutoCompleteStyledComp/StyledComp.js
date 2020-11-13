@@ -51,7 +51,7 @@ export const SearchButton = styled.button`
     border: none;
     height: 100%;
     width: 15%;
-    background: #ddd;
+    background: #bbb;
     color: inherit;
     border-left: 3px solid transparent;
     cursor: pointer;
@@ -61,13 +61,17 @@ export const SearchButton = styled.button`
     transition: all 0.3s ease-in-out;
 
     &:hover {
-        background: #bbb;
+        background: #999;
         border-left: 3px solid ${dark};
     }
 
     &:active {
         transform: scale(0.98);
         border-radius: 0 0.5em 0.5em 0;
+    }
+
+    &:focus {
+        outline: none;
     }
 
     ${(props) =>
