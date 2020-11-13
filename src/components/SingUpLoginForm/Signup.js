@@ -3,6 +3,11 @@ import { Button, Container, Form, InputGroup, Spinner } from "react-bootstrap";
 import classes from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import { HiCheckCircle } from "react-icons/hi";
+import { ImGithub } from "react-icons/im";
+import { FcGoogle } from "react-icons/fc";
+
+import GitHubLogin from "react-github-login";
+import SignInButton from "../UI/SingInButton";
 
 export default function Signup() {
   const {
@@ -45,6 +50,7 @@ export default function Signup() {
     return isUserUnique;
   };
 
+  console.log(process.env);
   return (
     <Container className={classes.signupContainer}>
       <h1>Create account</h1>
@@ -160,6 +166,16 @@ export default function Signup() {
               "Register"
             )}
           </Button>
+          <SignInButton
+            icon={<ImGithub size="2em" />}
+            text="Sing up with Github"
+          />
+          <SignInButton
+            variant="light"
+            icon={<FcGoogle size="2em" />}
+            text="Sing up with Google"
+            iconBorder="#202122"
+          />
         </Form>
       </div>
     </Container>

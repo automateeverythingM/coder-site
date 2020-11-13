@@ -1,0 +1,7 @@
+.icon {
+  min-width: 2em;
+  flex-basis: 8%;
+}
+.wrapper {
+  flex-basis: 80%;
+}
