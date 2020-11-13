@@ -1,9 +1,9 @@
 import React from "react";
 import { FormGroup } from "react-bootstrap";
-import classes from "./SignInStyle.module.css";
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from "@emotion/react";
+import ButtonWithLoadingDisable from "./ButtonWithLoadingDisable";
 export default function SingInButton({
     icon,
     text,
@@ -11,25 +11,24 @@ export default function SingInButton({
     iconBorder = "white",
 }) {
     return (
-        <FormGroup className={`w-100  p-0 mt-3 rounded border`}>
+        <FormGroup className="w-100 btn btn-light d-flex p-0 mt-3 rounded border overflow-hidden align-items-center mb-0">
             <div
                 css={css`
-                    width: 10%;
+                    flex: 0 0 10%;
                     text-align: center;
+                    border-right: 3px solid ${iconBorder};
                 `}
-                className="btn d-inline-block text-white"
+                className="h-100 btn rounded-0 d-inline-block text-white"
             >
                 {icon}
             </div>
-            <div
-                css={css`
-                    width: 90%;
-                    font-size: 1.2rem;
-                `}
-                className={`btn btn-${variant} d-inline-block h-100 rounded-0`}
+            <ButtonWithLoadingDisable
+                block
+                className="mt-0 border-0 shadow-none"
+                variant="white"
             >
                 {text}
-            </div>
+            </ButtonWithLoadingDisable>
         </FormGroup>
     );
 }

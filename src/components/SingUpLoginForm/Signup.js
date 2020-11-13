@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { HiCheckCircle } from "react-icons/hi";
 import { ImGithub } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
+import sleep from "./sleep";
 
 import GitHubLogin from "react-github-login";
 import SignInButton from "../UI/SingInButton";
@@ -29,9 +30,6 @@ export default function Signup() {
         setSubmitting(false);
         console.log("onSubmit -> data", data);
     };
-    function sleep(ms) {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-    }
     const uniqueUsernameCheck = async (name) => {
         setUsernameValidatePass(false);
 
@@ -174,18 +172,41 @@ export default function Signup() {
                                 errors.confirmPassword.message}
                         </Form.Control.Feedback>
                     </Form.Group>
-
-                    <ButtonWithLoadingDisable
-                        disabled={submitting}
-                        block
-                        variant="danger"
-                        type="submit"
-                        AsSpinner={Spinner}
-                        spinnerProps={{ animation: "border", variant: "white" }}
-                        onlySpinner
-                    >
-                        Register
-                    </ButtonWithLoadingDisable>
+                    <div className="mt-4">
+                        <ButtonWithLoadingDisable
+                            disabled={submitting}
+                            block
+                            variant="danger"
+                            type="submit"
+                            AsSpinner={Spinner}
+                            spinnerProps={{
+                                animation: "border",
+                                variant: "white",
+                                size: "sm",
+                            }}
+                            onlySpinner
+                        >
+                            Register
+                        </ButtonWithLoadingDisable>
+                        <SignInButton
+                            variant="light"
+                            icon={
+                                <ImGithub
+                                    color="#202122"
+                                    size="1.7rem"
+                                    className="h-100"
+                                />
+                            }
+                            text="Sing up with Github"
+                            iconBorder="#202122"
+                        />
+                        <SignInButton
+                            variant="light"
+                            icon={<FcGoogle size="1.7rem" />}
+                            text="Sing up with Google"
+                            iconBorder="#202122"
+                        />
+                    </div>
                 </Form>
             </div>
         </Container>

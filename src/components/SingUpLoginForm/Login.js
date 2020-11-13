@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { ImGithub } from "react-icons/im";
 import ButtonWithLoadingDisable from "../UI/ButtonWithLoadingDisable";
 import SignInButton from "../UI/SingInButton";
+import sleep from "./sleep";
 
 const container = css`
     display: flex;
@@ -24,42 +25,58 @@ const form = css`
 
 export default function Login() {
     const [submitting, setSubmitting] = useState(false);
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        await sleep(1500);
+        setSubmitting(false);
+    };
     return (
         <Container css={container}>
             <h1>Login</h1>
-            <Form noValidate css={form} className="bg-dark text-white">
+            <Form
+                onSubmit={handleSubmit}
+                noValidate
+                css={form}
+                className="bg-dark text-white"
+            >
                 <Form.Group>
                     <Form.Label>Username or email</Form.Label>
-                    <Form.Control />
+                    <Form.Control placeholder="Enter username or email" />
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" />
+                    <Form.Control
+                        type="password"
+                        placeholder="Enter Password"
+                    />
                 </Form.Group>
-
-                <ButtonWithLoadingDisable
-                    disabled={submitting}
-                    onlySpinner
-                    block
-                    size="lg"
-                    variant="danger"
-                    spinnerProps={{ animation: "border", variant: "white" }}
-                >
-                    Login
-                </ButtonWithLoadingDisable>
-                <SignInButton
-                    variant="light"
-                    icon={<ImGithub size="1.7rem" />}
-                    text="Sing up with Github"
-                />
-                <SignInButton
-                    variant="light"
-                    icon={<FcGoogle size="1.7rem" />}
-                    text="Sing up with Google"
-                    iconBorder="#202122"
-                />
+                <div className="mt-4">
+                    <ButtonWithLoadingDisable
+                        disabled={submitting}
+                        type="submit"
+                        onlySpinner
+                        block
+                        size="md"
+                        variant="danger"
+                        spinnerProps={{ animation: "border", variant: "white" }}
+                    >
+                        Login
+                    </ButtonWithLoadingDisable>
+                    <SignInButton
+                        variant="light"
+                        icon={<ImGithub size="1.7rem" color="#202122" />}
+                        text="Sing up with Github"
+                        iconBorder="#202122"
+                    />
+                    <SignInButton
+                        variant="light"
+                        icon={<FcGoogle size="1.7rem" />}
+                        text="Sing up with Google"
+                        iconBorder="#202122"
+                    />
+                </div>
             </Form>
         </Container>
     );
