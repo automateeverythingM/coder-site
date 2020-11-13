@@ -186,17 +186,6 @@ export default function Signup() {
                     >
                         Register
                     </ButtonWithLoadingDisable>
-
-                    <SignInButton
-                        icon={<ImGithub size="2em" />}
-                        text="Sing up with Github"
-                    />
-                    <SignInButton
-                        variant="light"
-                        icon={<FcGoogle size="2em" />}
-                        text="Sing up with Google"
-                        iconBorder="#202122"
-                    />
                 </Form>
             </div>
         </Container>
