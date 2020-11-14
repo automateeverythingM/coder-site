@@ -3,8 +3,9 @@
 import React from "react";
 import { css, jsx } from "@emotion/react";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
-const A = styled.a`
+const A = css`
     color: ${(props) => props.color};
     font-weight: bold;
 `;
@@ -16,14 +17,14 @@ const mockContent = (
             font-size: 0.7rem;
         `}
     >
-        <A color="#ffc107" href="#name">
+        <Link css={A} to="#name">
             Marko
-        </A>
+        </Link>
         <div>
             Last seen watching{" "}
-            <A color="#ffc107" href="#">
+            <Link css={A} to="#">
                 Arrested Development
-            </A>{" "}
+            </Link>{" "}
             just now.
         </div>
     </div>

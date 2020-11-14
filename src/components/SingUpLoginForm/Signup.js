@@ -10,6 +10,7 @@ import sleep from "./sleep";
 import GitHubLogin from "react-github-login";
 import SignInButton from "../UI/Buttons/SingInButton";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
     const {
@@ -206,6 +207,14 @@ export default function Signup() {
                             text="Sing up with Google"
                             iconBorder="#202122"
                         />
+                    </div>
+                    <div className="text-center mt-2">
+                        Already have an account?{" "}
+                        <b>
+                            <Link className="text-warning" to="/login">
+                                Login
+                            </Link>
+                        </b>
                     </div>
                 </Form>
             </div>

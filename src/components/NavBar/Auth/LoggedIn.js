@@ -5,6 +5,7 @@ import { css, jsx } from "@emotion/react";
 import { Image, Nav, NavDropdown } from "react-bootstrap";
 import NotificationItemPopUp from "../../UI/Notification/NotificationItemPopUp";
 import NotifIcon from "../Notification/Icon/NotifIcon";
+import { Link } from "react-router-dom";
 
 const navItem = css`
     border-left: 5px solid transparent;
@@ -33,30 +34,34 @@ export default function LoggedIn() {
     return (
         <Nav>
             <NavDropdown alignRight title={<NotifIcon />}>
-                <a css={navItem} href="#action/3.1">
+                <Link css={navItem} to="#action/3.1">
                     <NotificationItemPopUp imgSrc="https://picsum.photos/50" />
-                </a>
-                <a css={navItem} href="#action/3.2">
+                </Link>
+                <Link css={navItem} to="#action/3.2">
                     <NotificationItemPopUp imgSrc="https://picsum.photos/80" />
-                </a>
-                <a css={navItem} href="#action/3.3">
+                </Link>
+                <Link css={navItem} to="#action/3.3">
                     <NotificationItemPopUp imgSrc="https://picsum.photos/70" />
-                </a>
-                <a css={navItem} href="#action/3.4">
+                </Link>
+                <Link css={navItem} to="#action/3.4">
                     <NotificationItemPopUp imgSrc="https://picsum.photos/65" />
-                </a>
+                </Link>
             </NavDropdown>
 
             <NavDropdown alignRight title={userAvatar}>
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
+                <NavDropdown.Item as={Link} to="#action/3.1">
+                    Action
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="#action/3.2">
                     Another action
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
+                <NavDropdown.Item as={Link} to="#action/3.3">
                     Something
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Log out</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="#action/3.4">
+                    Log out
+                </NavDropdown.Item>
             </NavDropdown>
         </Nav>
     );
