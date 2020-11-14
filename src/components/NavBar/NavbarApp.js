@@ -3,7 +3,7 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import LoggedIn from "./Auth/LoggedIn";
 import NotLoggedIn from "./Auth/NotLoggedIn";
 
-export default function NavbarApp({ isLoggedIn = true }) {
+export default function NavbarApp({ isLoggedIn = false }) {
     const userAuth = isLoggedIn ? <LoggedIn /> : <NotLoggedIn />;
 
     return (

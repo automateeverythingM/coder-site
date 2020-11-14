@@ -101,7 +101,7 @@ export function setAutoSuggestion(value) {
 
 export function setAutoSuggestionAndCaseSensitive(appendedValue, value) {
     return {
-        type: SET_CASE_SENSITIVE_SUGGESTION,
+        type: SET_AUTOSUGGESTION_AND_CASE_SENSITIVE,
         payload: { appendedValue, value },
     };
 }
