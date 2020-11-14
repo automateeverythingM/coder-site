@@ -2,11 +2,10 @@
 /** @jsx jsx */
 import React from "react";
 import { css, jsx } from "@emotion/react";
-import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
 const A = css`
-    color: ${(props) => props.color};
+    color: #ffc107;
     font-weight: bold;
 `;
 
