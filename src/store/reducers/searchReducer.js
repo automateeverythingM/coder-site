@@ -1,6 +1,6 @@
 import produce from "immer";
-import tagList from "../../mocks/tagsMock";
-import selectFilters from "../../mocks/selectFilterMock";
+import tagList from "../mocks/tagsMock";
+import selectFilters from "../mocks/selectFilterMock";
 import { onDeleteHandler, manageTagList } from "./logic/tags";
 import menageSelector from "./logic/moveSelector";
 import axios from "axios";

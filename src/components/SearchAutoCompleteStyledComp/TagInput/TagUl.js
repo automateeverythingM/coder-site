@@ -2,7 +2,7 @@ import React from "react";
 import { Ul } from "../StyledComp";
 import Tag from "./Tag";
 import { connect } from "react-redux";
-import { deleteTag } from "../store/MainSearch/mainSearchReducer";
+import { deleteTag } from "../../../store/reducers/searchReducer";
 function TagUl({ tagList, handleDeleteTag }) {
     function handleDeleteClick(e) {
         const id = e?.target?.dataset?.id;
@@ -29,9 +29,9 @@ function TagUl({ tagList, handleDeleteTag }) {
     );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ searchReducer }) => {
     return {
-        tagList: state.tagList,
+        tagList: searchReducer.tagList,
     };
 };
 

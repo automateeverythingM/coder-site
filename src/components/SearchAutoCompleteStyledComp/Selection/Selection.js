@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {
     setSelectFilter,
     toggleFilterList,
-} from "../store/MainSearch/mainSearchReducer";
+} from "../../../store/reducers/searchReducer";
 function Selection({
     data,
     selected,
@@ -46,11 +46,11 @@ function Selection({
     );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ searchReducer }) => {
     return {
-        data: state.selectFilterList,
-        selected: state.selectedFilter,
-        showList: state.showFilterList,
+        data: searchReducer.selectFilterList,
+        selected: searchReducer.selectedFilter,
+        showList: searchReducer.showFilterList,
     };
 };
 

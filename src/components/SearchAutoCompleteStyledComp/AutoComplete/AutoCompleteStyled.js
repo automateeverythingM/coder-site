@@ -4,7 +4,7 @@ import {
     autocompleteListItemClick,
     autocompleteListMouseEnter,
     setSelector,
-} from "../store/MainSearch/mainSearchReducer";
+} from "../../../store/reducers/searchReducer";
 import { Li, UlDropdown } from "../StyledComp";
 
 function AutoCompleteStyled({
@@ -40,9 +40,9 @@ function AutoCompleteStyled({
     );
 }
 
-const mapStateToProps = (state) => ({
-    dropdownSelector: state.dropdownSelector,
-    autocompleteList: state.autocompleteList,
+const mapStateToProps = ({ searchReducer }) => ({
+    dropdownSelector: searchReducer.dropdownSelector,
+    autocompleteList: searchReducer.autocompleteList,
 });
 
 const mapDispatchToProps = (dispatch) => ({

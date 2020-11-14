@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Provider from "./store/configStore";
 import "./index.css";
 import App from "./App";
 import "./custom.scss";
 // import "semantic-ui-css/semantic.min.css";
 ReactDOM.render(
-    <React.StrictMode>
+    <Provider>
         <App />
-    </React.StrictMode>,
+    </Provider>,
     document.getElementById("root")
 );
 

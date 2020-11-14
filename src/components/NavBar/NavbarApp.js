@@ -10,7 +10,9 @@ export default function NavbarApp({ isLoggedIn = false }) {
     return (
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="/">CodeBuddy</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">
+                    CodeBuddy
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto md-m-0">

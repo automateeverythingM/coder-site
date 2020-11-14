@@ -14,7 +14,7 @@ import {
     assignInputRef,
     setAutoSuggestionAndCaseSensitive,
     setAutocompleteList,
-} from "../store/MainSearch/mainSearchReducer";
+} from "../../../store/reducers/searchReducer";
 import {
     CloseButton,
     Input,
@@ -185,13 +185,13 @@ function InputStyled({
     );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ searchReducer }) => {
     return {
-        inputValue: state.inputValue,
-        autoSuggestion: state.autoSuggestion,
-        caseSensitiveFill: state.caseSensitiveFillSuggestion,
-        dropdownSelector: state.dropdownSelector,
-        refInput: state.inputRef,
+        inputValue: searchReducer.inputValue,
+        autoSuggestion: searchReducer.autoSuggestion,
+        caseSensitiveFill: searchReducer.caseSensitiveFillSuggestion,
+        dropdownSelector: searchReducer.dropdownSelector,
+        refInput: searchReducer.inputRef,
     };
 };
 

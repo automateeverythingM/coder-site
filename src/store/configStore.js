@@ -3,13 +3,12 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
-import searchReducer, {
-    loadAutoCompleteList,
-} from "./MainSearch/mainSearchReducer";
+import rootReducer from "./reducers";
+import { loadAutoCompleteList } from "./reducers/searchReducer";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-    searchReducer,
+    rootReducer,
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 

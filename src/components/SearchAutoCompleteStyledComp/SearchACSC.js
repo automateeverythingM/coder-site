@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import AutoCompleteStyled from "./AutoComplete/AutoCompleteStyled";
 import InputStyled from "./Input/InputStyled";
-import mockStates from "./mocks/inputAutoComplete";
+import mockStates from "../../store/mocks/inputAutoComplete";
 import { RelativeContainer } from "./StyledComp";
 import { connect } from "react-redux";
 import {
     fetchAutoCompleteList,
     setAutocompleteList,
-} from "./store/MainSearch/mainSearchReducer";
+} from "../../store/reducers/searchReducer";
 
 function SearchACSC({
     autocompleteList,
@@ -50,10 +50,10 @@ function SearchACSC({
     );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ searchReducer }) => {
     return {
-        autocompleteList: state.autocompleteList,
-        inputLength: state.inputValue.length,
+        autocompleteList: searchReducer.autocompleteList,
+        inputLength: searchReducer.inputValue.length,
     };
 };
 
