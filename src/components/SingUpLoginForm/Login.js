@@ -2,9 +2,10 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import React, { useState } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Alert, Container, Form } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { ImGithub } from "react-icons/im";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import SignInButton from "../UI/Buttons/SingInButton";
@@ -24,7 +25,7 @@ const form = css`
     width: 60%;
 `;
 
-export default function Login() {
+function Login({ serverFetchError }) {
     const [submitting, setSubmitting] = useState(false);
     let email, password;
     const handleSubmit = async (e) => {
@@ -62,6 +63,11 @@ export default function Login() {
                         placeholder="Enter Password"
                     />
                 </Form.Group>
+                {serverFetchError && (
+                    <Alert className="text-center" variant="danger">
+                        {serverFetchError.message}
+                    </Alert>
+                )}
                 <div className="mt-4">
                     <ButtonWithLoadingDisable
                         disabled={submitting}
@@ -101,3 +107,14 @@ export default function Login() {
         </Container>
     );
 }
+
+const mapStateToProps = (state) => {
+    return {
+        serverFetchError: state.errors.serverFetchError,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

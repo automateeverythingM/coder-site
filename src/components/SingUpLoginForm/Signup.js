@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { css } from "@emotion/react";
 
-function Signup({ signupNewUser, serverErrors }) {
+function Signup({ signupNewUser, serverFetchError }) {
     const {
         register,
         handleSubmit,
@@ -181,9 +181,9 @@ function Signup({ signupNewUser, serverErrors }) {
                                 errors.confirmPassword.message}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    {serverErrors && (
+                    {serverFetchError && (
                         <Alert className="text-center" variant="danger">
-                            {serverErrors.message}
+                            {serverFetchError.message}
                         </Alert>
                     )}
                     <div className="mt-4">
@@ -235,9 +235,9 @@ function Signup({ signupNewUser, serverErrors }) {
     );
 }
 
-const mapStateToProps = ({ errors: { signupError } }) => {
+const mapStateToProps = ({ errors: { serverFetchError } }) => {
     return {
-        serverErrors: signupError,
+        serverFetchError: serverFetchError,
     };
 };
 

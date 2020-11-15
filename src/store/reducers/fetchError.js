@@ -7,14 +7,14 @@ export function setSignUpError(error) {
 }
 
 const initialState = {
-    signupError: null,
+    serverFetchError: null,
 };
 
 export default function reducer(state = initialState, action) {
     return produce(state, (draft) => {
         switch (action.type) {
             case SIGNUP_ERRORS:
-                draft.signupError = action.payload.error;
+                draft.serverFetchError = action.payload.error;
                 break;
 
             default:
