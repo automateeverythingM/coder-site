@@ -6,13 +6,14 @@ import { HiCheckCircle } from "react-icons/hi";
 import { ImGithub } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import sleep from "./sleep";
-
+import { signupUserINREDUCER } from "../../store/reducers/userReducer";
 import GitHubLogin from "react-github-login";
 import SignInButton from "../UI/Buttons/SingInButton";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default function Signup() {
+function Signup({ signupNewUser }) {
     const {
         register,
         handleSubmit,
@@ -27,6 +28,7 @@ export default function Signup() {
     const namesArray = ["marko", "nikola", "relja", "dusan", "djordje"];
     const onSubmit = async (data) => {
         setSubmitting(true);
+        signupNewUser(data);
         await sleep(1000);
         setSubmitting(false);
         console.log("onSubmit -> data", data);
@@ -50,7 +52,6 @@ export default function Signup() {
         return isUserUnique;
     };
 
-    console.log(process.env);
     return (
         <Container className={classes.signupContainer}>
             <h1>Create account</h1>
@@ -221,3 +222,11 @@ export default function Signup() {
         </Container>
     );
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signupNewUser: (value) => dispatch(signupUserINREDUCER(value)),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Signup);

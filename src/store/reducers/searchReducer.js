@@ -3,8 +3,6 @@ import tagList from "../mocks/tagsMock";
 import selectFilters from "../mocks/selectFilterMock";
 import { onDeleteHandler, manageTagList } from "./logic/tags";
 import menageSelector from "./logic/moveSelector";
-import axios from "axios";
-import { takeLatest, put } from "redux-saga/effects";
 import { cpxStateResetState } from "./logic/complexState";
 //! ****************************************************************//
 //!ACTIONTYPES CONSTANTS
@@ -37,27 +35,8 @@ const SET_AUTOSUGGESTION_AND_CASE_SENSITIVE =
 const AUTOCOMPLETE_LIST_ITEM_CLICK = "AUTOCOMPLETE_LIST_ITEM_CLICK";
 const AUTOCOMPLETE_LIST_MOUSE_ENTER = "AUTOCOMPLETE_LIST_MOUSE_ENTER";
 
-function* getAutoCompleteList(action) {
-    const {
-        payload: { value },
-    } = action;
-    let finished = yield axios
-        .get("https://api.npoint.io/b12a6e7e85e8e63d54a2")
-        .then(({ data }) => {
-            return data.filter((item) => {
-                return item.name.toLowerCase().startsWith(value.toLowerCase());
-            });
-        });
-    yield (finished = finished.slice(0, 10));
-
-    yield put(setAutocompleteList(finished));
-}
-
 //! ****************************************************************//
 //!ACTIONS
-export function* loadAutoCompleteList() {
-    yield takeLatest("FETCH_AUTOCOMPLETE_LIST", getAutoCompleteList);
-}
 
 export function deleteTag(id) {
     return { type: DELETE_TAG, payload: { id } };
