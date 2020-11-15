@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Container, Form, InputGroup, Spinner } from "react-bootstrap";
+import { Alert, Container, Form, InputGroup, Spinner } from "react-bootstrap";
 import classes from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import { HiCheckCircle } from "react-icons/hi";
@@ -12,8 +12,9 @@ import SignInButton from "../UI/Buttons/SingInButton";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { css } from "@emotion/react";
 
-function Signup({ signupNewUser }) {
+function Signup({ signupNewUser, serverErrors }) {
     const {
         register,
         handleSubmit,
@@ -22,10 +23,14 @@ function Signup({ signupNewUser }) {
         errors,
         getValues,
     } = useForm({});
+
+    //
     const [asyncCallInProgress, setAsyncCallInProgress] = useState(false);
     const [usernameValidatePass, setUsernameValidatePass] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const namesArray = ["marko", "nikola", "relja", "dusan", "djordje"];
+    const asyncCheckIn = asyncCallInProgress || usernameValidatePass;
+    const checkAsync = asyncCheckIn ? "rounded-right-0" : "rounded-right";
     const onSubmit = async (data) => {
         setSubmitting(true);
         signupNewUser(data);
@@ -33,6 +38,8 @@ function Signup({ signupNewUser }) {
         setSubmitting(false);
         console.log("onSubmit -> data", data);
     };
+
+    //
     const uniqueUsernameCheck = async (name) => {
         setUsernameValidatePass(false);
 
@@ -68,7 +75,7 @@ function Signup({ signupNewUser }) {
                         <Form.Label>Username</Form.Label>
                         <InputGroup className="rounded-right overflow-hidden">
                             <Form.Control
-                                className="border-right-0 shadow-none border-0 rounded-right"
+                                className={`border-right-0 shadow-none border-0 ${checkAsync}`}
                                 name="username"
                                 ref={register({
                                     required: "Username is required",
@@ -92,7 +99,7 @@ function Signup({ signupNewUser }) {
                                     errors.username && !asyncCallInProgress
                                 }
                             />
-                            {(asyncCallInProgress || usernameValidatePass) && (
+                            {asyncCheckIn && (
                                 <InputGroup.Append className="d-flex align-items-center bg-white rounded-right px-2">
                                     {usernameValidatePass ? (
                                         <HiCheckCircle color="green" />
@@ -174,6 +181,11 @@ function Signup({ signupNewUser }) {
                                 errors.confirmPassword.message}
                         </Form.Control.Feedback>
                     </Form.Group>
+                    {serverErrors && (
+                        <Alert className="text-center" variant="danger">
+                            {serverErrors.message}
+                        </Alert>
+                    )}
                     <div className="mt-4">
                         <ButtonWithLoadingDisable
                             disabled={submitting}
@@ -223,10 +235,16 @@ function Signup({ signupNewUser }) {
     );
 }
 
+const mapStateToProps = ({ errors: { signupError } }) => {
+    return {
+        serverErrors: signupError,
+    };
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         signupNewUser: (value) => dispatch(signupUserINREDUCER(value)),
     };
 };
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

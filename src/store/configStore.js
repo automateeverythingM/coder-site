@@ -4,8 +4,6 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers";
-import { loadAutoCompleteList } from "./reducers/searchReducer";
-import { signupUserSaga } from "./reducers/userReducer";
 import rootSagas from "./sagas/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
