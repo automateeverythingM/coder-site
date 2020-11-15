@@ -5,8 +5,10 @@ import React, { useState } from "react";
 import { Alert, Container, Form } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { ImGithub } from "react-icons/im";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { auth } from "../../firebase";
+import { loginUser } from "../../store/reducers/userReducer";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import SignInButton from "../UI/Buttons/SingInButton";
 import sleep from "./sleep";
@@ -25,13 +27,17 @@ const form = css`
     width: 60%;
 `;
 
-function Login({ serverFetchError }) {
+function Login({ serverFetchError, isUserAuthenticated }) {
     const [submitting, setSubmitting] = useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
     let email, password;
     const handleSubmit = async (e) => {
-        e.preventDefault();
         setSubmitting(true);
-        await sleep(1500);
+        e.preventDefault();
+
+        dispatch(loginUser(email.value, password.value));
+        if (isUserAuthenticated) history.push("/");
         setSubmitting(false);
     };
     return (
@@ -111,6 +117,7 @@ function Login({ serverFetchError }) {
 const mapStateToProps = (state) => {
     return {
         serverFetchError: state.errors.serverFetchError,
+        isUserAuthenticated: !!state.userReducer.currentUser,
     };
 };
 const mapDispatchToProps = (dispatch) => {

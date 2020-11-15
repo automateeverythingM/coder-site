@@ -10,11 +10,12 @@ import { signupUserINREDUCER } from "../../store/reducers/userReducer";
 import GitHubLogin from "react-github-login";
 import SignInButton from "../UI/Buttons/SingInButton";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { css } from "@emotion/react";
+import { auth } from "../../firebase";
 
-function Signup({ signupNewUser, serverFetchError }) {
+function Signup({ signupNewUser, serverFetchError, isUserCreated }) {
     const {
         register,
         handleSubmit,
@@ -23,7 +24,7 @@ function Signup({ signupNewUser, serverFetchError }) {
         errors,
         getValues,
     } = useForm({});
-
+    const history = useHistory();
     //
     const [asyncCallInProgress, setAsyncCallInProgress] = useState(false);
     const [usernameValidatePass, setUsernameValidatePass] = useState(false);
@@ -34,7 +35,9 @@ function Signup({ signupNewUser, serverFetchError }) {
     const onSubmit = async (data) => {
         setSubmitting(true);
         signupNewUser(data);
-        await sleep(1000);
+
+        console.log("Signup -> isUserCreated", isUserCreated);
+        if (isUserCreated) history.push("/");
         setSubmitting(false);
         console.log("onSubmit -> data", data);
     };
@@ -125,7 +128,13 @@ function Signup({ signupNewUser, serverFetchError }) {
                         <Form.Label>Email</Form.Label>
                         <Form.Control
                             name="email"
-                            ref={register({ required: "Email is required" })}
+                            ref={register({
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$/,
+                                    message: "Please enter a valid email",
+                                },
+                            })}
                             type="email"
                             placeholder="Enter email"
                             isInvalid={errors.email && errors.email.message}
@@ -235,9 +244,10 @@ function Signup({ signupNewUser, serverFetchError }) {
     );
 }
 
-const mapStateToProps = ({ errors: { serverFetchError } }) => {
+const mapStateToProps = ({ errors, userReducer }) => {
     return {
-        serverFetchError: serverFetchError,
+        serverFetchError: errors.serverFetchError,
+        isUserCreated: userReducer.currentUser,
     };
 };
 

@@ -7,6 +7,7 @@ import NotificationItemPopUp from "../../UI/Notification/NotificationItemPopUp";
 import NotifIcon from "../Notification/Icon/NotifIcon";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { singOutUser } from "../../../store/reducers/userReducer";
 
 const navItem = css`
     border-left: 5px solid transparent;
@@ -62,10 +63,9 @@ export default function LoggedIn() {
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
-                    to="#action/3."
                     as={Button}
                     className="btn-dark"
-                    onClick={() => alert("SignOut")}
+                    onClick={() => dispatch(singOutUser())}
                 >
                     Log out
                 </NavDropdown.Item>
