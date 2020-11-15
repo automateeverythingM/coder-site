@@ -2,10 +2,11 @@ import React from "react";
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
-import { Image, Nav, NavDropdown } from "react-bootstrap";
+import { Button, Image, Nav, NavDropdown } from "react-bootstrap";
 import NotificationItemPopUp from "../../UI/Notification/NotificationItemPopUp";
 import NotifIcon from "../Notification/Icon/NotifIcon";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const navItem = css`
     border-left: 5px solid transparent;
@@ -22,6 +23,7 @@ const navItem = css`
 `;
 
 export default function LoggedIn() {
+    const dispatch = useDispatch();
     const userAvatar = (
         <Image
             style={{ width: "1.5em", height: "1.5em" }}
@@ -59,7 +61,12 @@ export default function LoggedIn() {
                     Something
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to="#action/3.4">
+                <NavDropdown.Item
+                    to="#action/3."
+                    as={Button}
+                    className="btn-dark"
+                    onClick={() => alert("SignOut")}
+                >
                     Log out
                 </NavDropdown.Item>
             </NavDropdown>

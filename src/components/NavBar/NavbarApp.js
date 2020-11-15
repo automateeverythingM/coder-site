@@ -1,11 +1,12 @@
 import React from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import LoggedIn from "./Auth/LoggedIn";
 import NotLoggedIn from "./Auth/NotLoggedIn";
 
-export default function NavbarApp({ isLoggedIn = false }) {
-    const userAuth = isLoggedIn ? <LoggedIn /> : <NotLoggedIn />;
+function NavbarApp({ isUserAuthenticated }) {
+    const userAuth = isUserAuthenticated ? <LoggedIn /> : <NotLoggedIn />;
 
     return (
         <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
@@ -45,3 +46,11 @@ export default function NavbarApp({ isLoggedIn = false }) {
         </Navbar>
     );
 }
+
+const state = ({ userReducer }) => {
+    return {
+        isUserAuthenticated: !!userReducer.currentUser,
+    };
+};
+
+export default connect(state)(NavbarApp);

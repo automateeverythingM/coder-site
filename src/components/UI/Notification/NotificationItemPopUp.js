@@ -16,14 +16,14 @@ const mockContent = (
             font-size: 0.7rem;
         `}
     >
-        <Link css={A} to="#name">
+        <span css={A} to="#name">
             Marko
-        </Link>
+        </span>
         <div>
             Last seen watching{" "}
-            <Link css={A} to="#">
+            <span css={A} to="#">
                 Arrested Development
-            </Link>{" "}
+            </span>{" "}
             just now.
         </div>
     </div>

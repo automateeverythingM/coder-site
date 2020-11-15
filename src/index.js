@@ -1,14 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Provider from "./store/configStore";
+import StoreProvider from "./store/configStore";
 import "./index.css";
 import App from "./App";
 import "./custom.scss";
+import { auth } from "./firebase";
+
 // import "semantic-ui-css/semantic.min.css";
 ReactDOM.render(
-    <Provider>
+    <StoreProvider>
         <App />
-    </Provider>,
+    </StoreProvider>,
     document.getElementById("root")
 );
 

@@ -15,7 +15,6 @@ function* signup(action) {
     try {
         yield auth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
-        console.log("function*signup -> error", error);
         yield put(setSignUpError(error));
     }
 }

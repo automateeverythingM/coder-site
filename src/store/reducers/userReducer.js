@@ -13,7 +13,7 @@ const initialState = {
 //! ****************
 
 export function setCurrentUser(user) {
-    return { type: SET_CURRENT_USER, payload: user };
+    return { type: SET_CURRENT_USER, payload: { user } };
 }
 
 export function signupUserINREDUCER(user) {
@@ -27,7 +27,6 @@ export default function userReducer(state = initialState, action) {
             case SET_CURRENT_USER:
                 draft.currentUser = payload.user;
                 break;
-
             default:
                 break;
         }
