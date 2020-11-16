@@ -1,6 +1,6 @@
 import { put, takeEvery } from "redux-saga/effects";
 import { auth } from "../../firebase";
-import { setSignUpError } from "../reducers/fetchError";
+import { setFetchError } from "../reducers/fetchError";
 import { SIGNUP_USER, LOG_OUT_USER, LOGIN } from "../reducers/userReducer";
 
 export function* signupUserSaga() {
@@ -23,7 +23,7 @@ function* login(action) {
             action.payload.password
         );
     } catch (error) {
-        yield put(setSignUpError(error));
+        yield put(setFetchError(error));
     }
 }
 function* singOut() {
@@ -38,6 +38,6 @@ function* signup(action) {
     try {
         yield auth.createUserWithEmailAndPassword(email, password);
     } catch (error) {
-        yield put(setSignUpError(error));
+        yield put(setFetchError(error));
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Container, Form, InputGroup, Spinner } from "react-bootstrap";
 import classes from "./styles.module.css";
 import { useForm } from "react-hook-form";
@@ -6,16 +6,23 @@ import { HiCheckCircle } from "react-icons/hi";
 import { ImGithub } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
 import sleep from "./sleep";
-import { signupUserINREDUCER } from "../../store/reducers/userReducer";
-import GitHubLogin from "react-github-login";
+import {
+    setCurrentUser,
+    signupUserINREDUCER,
+} from "../../store/reducers/userReducer";
 import SignInButton from "../UI/Buttons/SingInButton";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import { Link, useHistory } from "react-router-dom";
-import { connect } from "react-redux";
-import { css } from "@emotion/react";
+import { connect, useDispatch } from "react-redux";
 import { auth } from "../../firebase";
+import { setFetchError } from "../../store/reducers/fetchError";
 
-function Signup({ signupNewUser, serverFetchError, isUserCreated }) {
+function Signup({
+    signupNewUser,
+    serverFetchError,
+    isUserCreated,
+    isUserAuthenticated,
+}) {
     const {
         register,
         handleSubmit,
@@ -24,6 +31,7 @@ function Signup({ signupNewUser, serverFetchError, isUserCreated }) {
         errors,
         getValues,
     } = useForm({});
+    const dispatch = useDispatch();
     const history = useHistory();
     //
     const [asyncCallInProgress, setAsyncCallInProgress] = useState(false);
@@ -34,15 +42,21 @@ function Signup({ signupNewUser, serverFetchError, isUserCreated }) {
     const checkAsync = asyncCheckIn ? "rounded-right-0" : "rounded-right";
     const onSubmit = async (data) => {
         setSubmitting(true);
-        signupNewUser(data);
+        const { email, password } = data;
+        const user = await auth
+            .createUserWithEmailAndPassword(email, password)
+            .catch((error) => {
+                dispatch(setFetchError(error));
+            });
+        //!redux saga
+        // signupNewUser(data);
 
-        console.log("Signup -> isUserCreated", isUserCreated);
-        if (isUserCreated) history.push("/");
+        //
+        setCurrentUser(user);
         setSubmitting(false);
-        console.log("onSubmit -> data", data);
+        if (user) history.push("/");
     };
 
-    //
     const uniqueUsernameCheck = async (name) => {
         setUsernameValidatePass(false);
 
@@ -248,6 +262,7 @@ const mapStateToProps = ({ errors, userReducer }) => {
     return {
         serverFetchError: errors.serverFetchError,
         isUserCreated: userReducer.currentUser,
+        isUserAuthenticated: !!userReducer.currentUser,
     };
 };
 

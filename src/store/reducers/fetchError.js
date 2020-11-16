@@ -1,9 +1,9 @@
 import produce from "immer";
 
-const SIGNUP_ERRORS = "SIGNUP_ERRORS";
+const FETCH_ERROR = "FETCH_ERROR";
 
-export function setSignUpError(error) {
-    return { type: SIGNUP_ERRORS, payload: { error } };
+export function setFetchError(error) {
+    return { type: FETCH_ERROR, payload: { error } };
 }
 
 const initialState = {
@@ -13,7 +13,7 @@ const initialState = {
 export default function reducer(state = initialState, action) {
     return produce(state, (draft) => {
         switch (action.type) {
-            case SIGNUP_ERRORS:
+            case FETCH_ERROR:
                 draft.serverFetchError = action.payload.error;
                 break;
 

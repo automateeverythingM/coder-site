@@ -9,6 +9,7 @@ export const LOGIN = "LOGIN";
 
 const initialState = {
     currentUser: null,
+    isUserSignIn: false,
 };
 
 //! ***********************

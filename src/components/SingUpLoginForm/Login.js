@@ -1,14 +1,15 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, Container, Form } from "react-bootstrap";
 import { FcGoogle } from "react-icons/fc";
 import { ImGithub } from "react-icons/im";
 import { connect, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
-import { loginUser } from "../../store/reducers/userReducer";
+import { setFetchError } from "../../store/reducers/fetchError";
+import { loginUser, setCurrentUser } from "../../store/reducers/userReducer";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import SignInButton from "../UI/Buttons/SingInButton";
 import sleep from "./sleep";
@@ -31,15 +32,28 @@ function Login({ serverFetchError, isUserAuthenticated }) {
     const [submitting, setSubmitting] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
-    let email, password;
-    const handleSubmit = async (e) => {
-        setSubmitting(true);
-        e.preventDefault();
+    const email = useRef();
+    const password = useRef();
 
-        dispatch(loginUser(email.value, password.value));
-        if (isUserAuthenticated) history.push("/");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+
+        const user = await auth
+            .signInWithEmailAndPassword(
+                email.current.value,
+                password.current.value
+            )
+            .catch((error) => {
+                dispatch(setFetchError(error));
+            });
+
+        setCurrentUser(user);
+
         setSubmitting(false);
+        if (user) history.push("/");
     };
+
     return (
         <Container css={container}>
             <h1>Login</h1>
@@ -52,9 +66,7 @@ function Login({ serverFetchError, isUserAuthenticated }) {
                 <Form.Group>
                     <Form.Label>Username or email</Form.Label>
                     <Form.Control
-                        ref={(ref) => {
-                            email = ref;
-                        }}
+                        ref={email}
                         placeholder="Enter username or email"
                     />
                 </Form.Group>
@@ -62,9 +74,7 @@ function Login({ serverFetchError, isUserAuthenticated }) {
                 <Form.Group>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                        ref={(ref) => {
-                            password = ref;
-                        }}
+                        ref={password}
                         type="password"
                         placeholder="Enter Password"
                     />
