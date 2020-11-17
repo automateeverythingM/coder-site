@@ -2,8 +2,12 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import React from "react";
+import { connect } from "react-redux";
+import ProfileAbout from "./ProfileAbout/ProfileAbout";
 
-export default function Profile() {
+function Profile({ user }) {
+    console.log("Profile -> user", user);
+
     return (
         <div
             css={css`
@@ -18,10 +22,20 @@ export default function Profile() {
         >
             <div className="container">
                 <div className="row">
-                    <div className="col-3 bg-dark text-white">image</div>
-                    <div className="col-9 bg-white text-dark">blah</div>
+                    <div className="col-4 bg-dark text-white">
+                        <ProfileAbout />
+                    </div>
+                    <div className="col-8 bg-white text-dark"></div>
                 </div>
             </div>
         </div>
     );
 }
+
+const mapStateToProps = (state) => ({
+    user: state.userReducer.currentUser,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

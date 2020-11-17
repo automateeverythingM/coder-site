@@ -17,6 +17,7 @@ import { connect, useDispatch } from "react-redux";
 import { auth, githubProvider, googleProvider } from "../../firebase";
 import { setFetchError } from "../../store/reducers/fetchError";
 import getUserWithProvider from "./authProvider";
+import md5 from "md5";
 
 function Signup({
     signupNewUser,
@@ -43,12 +44,16 @@ function Signup({
     const checkAsync = asyncCheckIn ? "rounded-right-0" : "rounded-right";
     const onSubmit = async (data) => {
         setSubmitting(true);
-        const { email, password } = data;
+        const { email, password, username } = data;
         const user = await auth
             .createUserWithEmailAndPassword(email, password)
             .catch((error) => {
                 dispatch(setFetchError(error));
             });
+        await user.user.updateProfile({
+            photoURL: `http://gravatar.com/avatar/${md5(email)}`,
+            displayName: username,
+        });
         //!redux saga
         // signupNewUser(data);
 
