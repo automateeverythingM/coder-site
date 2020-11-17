@@ -6,14 +6,14 @@ function AuthRoute({
     component: Component,
     isUserAuthenticated,
     redirectTo = "/login",
-    restrictedIf = false,
+    restricted = false,
     ...rest
 }) {
     return (
         <Route
             {...rest}
             render={(props) =>
-                isUserAuthenticated && !restrictedIf ? (
+                isUserAuthenticated && !restricted ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to={redirectTo} />

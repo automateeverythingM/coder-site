@@ -2,6 +2,7 @@ import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
 import Home from "./components/Pages/Home";
+import Profile from "./components/Pages/Profile/Profile";
 import Notification from "react-notifications-component";
 import "./App.css";
 import "react-notifications-component/dist/theme.css";
@@ -44,6 +45,7 @@ function App({ isUserAuthenticated }) {
                             redirectTo="/"
                             component={Login}
                         />
+                        <AuthRoute exact path="/profile" component={Profile} />
                         <Route exact path="/" component={Home} />
                     </Switch>
                 </Suspense>

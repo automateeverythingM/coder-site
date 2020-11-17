@@ -52,8 +52,8 @@ export default function LoggedIn() {
             </NavDropdown>
 
             <NavDropdown alignRight title={userAvatar}>
-                <NavDropdown.Item as={Link} to="#action/3.1">
-                    Action
+                <NavDropdown.Item as={Link} to="/profile">
+                    Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="#action/3.2">
                     Another action
