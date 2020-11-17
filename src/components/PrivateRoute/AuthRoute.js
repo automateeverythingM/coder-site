@@ -2,20 +2,21 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route } from "react-router";
 
-function PrivateRoute({
+function AuthRoute({
     component: Component,
     isUserAuthenticated,
-    restricted,
+    redirectTo = "/login",
+    restrictedIf = false,
     ...rest
 }) {
     return (
         <Route
             {...rest}
             render={(props) =>
-                isUserAuthenticated && restricted ? (
+                isUserAuthenticated && !restrictedIf ? (
                     <Component {...props} />
                 ) : (
-                    <Redirect to="/login" />
+                    <Redirect to={redirectTo} />
                 )
             }
         ></Route>
@@ -28,4 +29,4 @@ const user = ({ userReducer }) => {
     };
 };
 
-export default connect(user)(PrivateRoute);
+export default connect(user)(AuthRoute);

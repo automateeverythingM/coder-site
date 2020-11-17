@@ -14,8 +14,9 @@ import SignInButton from "../UI/Buttons/SingInButton";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import { Link, useHistory } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { auth } from "../../firebase";
+import { auth, githubProvider, googleProvider } from "../../firebase";
 import { setFetchError } from "../../store/reducers/fetchError";
+import getUserWithProvider from "./authProvider";
 
 function Signup({
     signupNewUser,
@@ -74,6 +75,14 @@ function Signup({
             });
 
         return isUserUnique;
+    };
+
+    const singUpWithGithub = () => {
+        getUserWithProvider(githubProvider, dispatch, setFetchError);
+    };
+
+    const signupWithGoogle = () => {
+        getUserWithProvider(googleProvider, dispatch, setFetchError);
     };
 
     return (
@@ -234,6 +243,7 @@ function Signup({
                                     className="h-100"
                                 />
                             }
+                            onClick={singUpWithGithub}
                             text="Sing up with Github"
                             iconBorder="#202122"
                         />
@@ -242,6 +252,7 @@ function Signup({
                             icon={<FcGoogle size="1.7rem" />}
                             text="Sing up with Google"
                             iconBorder="#202122"
+                            onClick={signupWithGoogle}
                         />
                     </div>
                     <div className="text-center mt-2">

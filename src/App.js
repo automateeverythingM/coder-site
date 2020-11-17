@@ -1,17 +1,20 @@
-import { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Signup, Login } from "./components/SingUpLoginForm";
 import Navbar from "./components/NavBar";
 import Home from "./components/Pages/Home";
 import Notification from "react-notifications-component";
 import "./App.css";
 import "react-notifications-component/dist/theme.css";
 import "animate.css";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { auth } from "./firebase";
 import { setCurrentUser } from "./store/reducers/userReducer";
+import AuthRoute from "./components/PrivateRoute/AuthRoute";
+import RedirectRoute from "./components/PrivateRoute/RedirectRoute";
+const Login = React.lazy(() => import("./components/SingUpLoginForm/Login"));
+const Signup = React.lazy(() => import("./components/SingUpLoginForm/Signup"));
 
-function App() {
+function App({ isUserAuthenticated }) {
     const dispatch = useDispatch();
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
@@ -25,14 +28,34 @@ function App() {
                 <Navbar />
             </header>
             <main>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/signup" component={Signup} />
-                    <Route exact path="/login" component={Login} />
-                </Switch>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Switch>
+                        <RedirectRoute
+                            exact
+                            path="/signup"
+                            redirectTo="/"
+                            restrictCondition={isUserAuthenticated}
+                            component={Signup}
+                        />
+                        <RedirectRoute
+                            exact
+                            path="/login"
+                            restrictCondition={isUserAuthenticated}
+                            redirectTo="/"
+                            component={Login}
+                        />
+                        <Route exact path="/" component={Home} />
+                    </Switch>
+                </Suspense>
             </main>
         </Router>
     );
 }
 
-export default App;
+const state = ({ userReducer }) => {
+    return {
+        isUserAuthenticated: !!userReducer.currentUser,
+    };
+};
+
+export default connect(state)(App);

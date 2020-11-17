@@ -9,9 +9,13 @@ export default function SingInButton({
     text,
     variant = "dark",
     iconBorder = "white",
+    ...rest
 }) {
     return (
-        <FormGroup className="w-100 btn btn-light d-flex p-0 mt-3 rounded border overflow-hidden align-items-center mb-0">
+        <FormGroup
+            {...rest}
+            className="w-100 btn btn-light d-flex p-0 mt-3 rounded border overflow-hidden align-items-center mb-0"
+        >
             <div
                 css={css`
                     flex: 0 0 10%;

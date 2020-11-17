@@ -7,11 +7,12 @@ import { FcGoogle } from "react-icons/fc";
 import { ImGithub } from "react-icons/im";
 import { connect, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { auth } from "../../firebase";
+import { auth, githubProvider, googleProvider } from "../../firebase";
 import { setFetchError } from "../../store/reducers/fetchError";
 import { loginUser, setCurrentUser } from "../../store/reducers/userReducer";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import SignInButton from "../UI/Buttons/SingInButton";
+import getUserWithProvider from "./authProvider";
 import sleep from "./sleep";
 
 const container = css`
@@ -52,6 +53,14 @@ function Login({ serverFetchError, isUserAuthenticated }) {
 
         setSubmitting(false);
         if (user) history.push("/");
+    };
+
+    const loginWithGithub = () => {
+        getUserWithProvider(githubProvider, dispatch, setFetchError);
+    };
+
+    const loginWithGoogle = () => {
+        getUserWithProvider(googleProvider, dispatch, setFetchError);
     };
 
     return (
@@ -102,12 +111,14 @@ function Login({ serverFetchError, isUserAuthenticated }) {
                         icon={<ImGithub size="1.7rem" color="#202122" />}
                         text="Sing up with Github"
                         iconBorder="#202122"
+                        onClick={loginWithGithub}
                     />
                     <SignInButton
                         variant="light"
                         icon={<FcGoogle size="1.7rem" />}
                         text="Sing up with Google"
                         iconBorder="#202122"
+                        onClick={loginWithGoogle}
                     />
                 </div>
 
