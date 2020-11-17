@@ -39,7 +39,7 @@ function Login({ serverFetchError, isUserAuthenticated }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
-
+        sleep(5000);
         const user = await auth
             .signInWithEmailAndPassword(
                 email.current.value,
@@ -109,14 +109,14 @@ function Login({ serverFetchError, isUserAuthenticated }) {
                     <SignInButton
                         variant="light"
                         icon={<ImGithub size="1.7rem" color="#202122" />}
-                        text="Sing up with Github"
+                        text="Login with Github"
                         iconBorder="#202122"
                         onClick={loginWithGithub}
                     />
                     <SignInButton
                         variant="light"
                         icon={<FcGoogle size="1.7rem" />}
-                        text="Sing up with Google"
+                        text="Login with Google"
                         iconBorder="#202122"
                         onClick={loginWithGoogle}
                     />
