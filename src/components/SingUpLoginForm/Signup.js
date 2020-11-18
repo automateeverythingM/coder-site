@@ -82,12 +82,12 @@ function Signup({
         return isUserUnique;
     };
 
-    const singUpWithGithub = () => {
-        getUserWithProvider(githubProvider, dispatch, setFetchError);
+    const singUpWithGithub = async () => {
+        await getUserWithProvider(githubProvider, dispatch, setFetchError);
     };
 
-    const signupWithGoogle = () => {
-        getUserWithProvider(googleProvider, dispatch, setFetchError);
+    const signupWithGoogle = async () => {
+        await getUserWithProvider(googleProvider, dispatch, setFetchError);
     };
 
     return (

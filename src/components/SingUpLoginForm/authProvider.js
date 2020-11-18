@@ -1,19 +1,25 @@
-import { auth } from "../../firebase";
+import { auth, firestore } from "../../firebase";
 
-export default function getUserWithProvider(provider, dispatch, setError) {
-    auth.signInWithPopup(provider)
+export default async function getUserWithProviderSignUp(
+    provider,
+    dispatch,
+    setError
+) {
+    return auth
+        .signInWithPopup(provider)
         .then(function (result) {
-            // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-            var token = result.credential.accessToken;
-            console.log("token", token);
-            // The signed-in user info.
-            var user = result.user;
-            console.log("result", result);
-            console.log("user", user);
+            firestore
+                .collection("users")
+                .doc(result.user.uid)
+                .set({ ...result.additionalUserInfo });
 
+            // console.log("result.credential", result.credential);
+            // console.log("token", token);
+            // The signed-in user info.
             // ...
         })
         .catch(function (error) {
+            console.log("error", error);
             // Handle Errors here.
             dispatch(setError(error));
             // var errorCode = error.code;

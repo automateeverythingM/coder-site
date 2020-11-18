@@ -9,7 +9,7 @@ import HeroSearch from "../../Hero/HeroSearch";
 import { store } from "react-notifications-component";
 import "animate.css/animate.compat.css";
 import NotificationItemPopUp from "../../UI/Notification/NotificationItemPopUp";
-
+import { nanoid } from "nanoid";
 const style = css`
     position: relative;
 `;
@@ -62,6 +62,9 @@ export default function index() {
             >
                 Push Notification
             </Button>
+            <label className="display-1" htmlFor="">
+                {nanoid(10)}
+            </label>
         </div>
     );
 }

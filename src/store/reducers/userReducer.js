@@ -6,9 +6,12 @@ export const SIGNUP_USER = "SIGNUP_USER";
 export const LOG_OUT_USER = "LOG_OUT_USER";
 const IS_LOGGED_IN = "IS_LOGGED_IN";
 export const LOGIN = "LOGIN";
+export const SET_GITHUB_CREDENTIALS = "SET_GITHUB_CREDENTIALS";
 
 const initialState = {
     currentUser: null,
+    githubCredentialsToken: null,
+    googleCredentials: null,
     isUserSignIn: false,
 };
 
@@ -27,6 +30,9 @@ export function loginUser(email, password) {
 export function singOutUser() {
     return { type: LOG_OUT_USER, payload: {} };
 }
+export function setGithubCredentials(credentials) {
+    return { type: SET_GITHUB_CREDENTIALS, payload: { credentials } };
+}
 
 export function signupUserINREDUCER(user) {
     return { type: SIGNUP_USER, payload: user };
@@ -42,6 +48,9 @@ export default function userReducer(state = initialState, action) {
         switch (type) {
             case SET_CURRENT_USER:
                 draft.currentUser = payload.user;
+                break;
+            case SET_GITHUB_CREDENTIALS:
+                draft.githubCredentialsToken = payload.credentials;
                 break;
             default:
                 break;
