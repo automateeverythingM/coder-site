@@ -55,12 +55,12 @@ function Login({ serverFetchError, isUserAuthenticated }) {
         if (user) history.push("/");
     };
 
-    const loginWithGithub = () => {
-        getUserWithProvider(githubProvider, dispatch, setFetchError);
+    const loginWithGithub = async () => {
+        await getUserWithProvider(githubProvider, dispatch, setFetchError);
     };
 
-    const loginWithGoogle = () => {
-        getUserWithProvider(googleProvider, dispatch, setFetchError);
+    const loginWithGoogle = async () => {
+        await getUserWithProvider(googleProvider, dispatch, setFetchError);
     };
 
     return (

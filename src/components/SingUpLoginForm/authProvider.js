@@ -8,10 +8,13 @@ export default async function getUserWithProviderSignUp(
     return auth
         .signInWithPopup(provider)
         .then(function (result) {
-            firestore
-                .collection("users")
-                .doc(result.user.uid)
-                .set({ ...result.additionalUserInfo });
+            console.log("result", result);
+            if (result.additionalUserInfo.isNewUser) {
+                firestore
+                    .collection("users")
+                    .doc(result.user.uid)
+                    .set({ ...result.additionalUserInfo.profile });
+            }
 
             // console.log("result.credential", result.credential);
             // console.log("token", token);
