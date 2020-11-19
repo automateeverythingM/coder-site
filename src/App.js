@@ -17,8 +17,8 @@ const Signup = React.lazy(() => import("./components/SingUpLoginForm/Signup"));
 
 function App({ isUserAuthenticated }) {
     const dispatch = useDispatch();
-    useEffect(() => {
-        auth.onAuthStateChanged((user) => {
+    useEffect(async () => {
+        await auth.onAuthStateChanged((user) => {
             dispatch(setCurrentUser(user));
         });
     }, []);

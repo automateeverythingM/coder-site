@@ -13,8 +13,22 @@ function ProfileAbout({ user, token }) {
     const [showEdit, setShowEdit] = useState("hidden");
 
     return (
-        <div>
+        <div
+            css={css`
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100vh;
+                padding-top: 50px;
+                color: whitesmoke;
+            `}
+        >
             <Avatar />
+            <div>
+                <p></p>
+                <a href="#s">sda</a>
+            </div>
+            <div className="w-100 d-flex justify-content-center"></div>
         </div>
     );
 }

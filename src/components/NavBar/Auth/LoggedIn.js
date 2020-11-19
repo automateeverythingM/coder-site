@@ -23,8 +23,7 @@ const navItem = css`
     }
 `;
 
-function LoggedIn({ user }) {
-    const { photoURL } = user;
+function LoggedIn({ photoURL }) {
     const dispatch = useDispatch();
     const userAvatar = (
         <Image
@@ -83,8 +82,8 @@ function LoggedIn({ user }) {
     );
 }
 
-const mapStateToProps = (state) => ({
-    user: state.userReducer.currentUser,
+const mapStateToProps = ({ userReducer }) => ({
+    photoURL: userReducer.currentUser.photoURL,
 });
 
 const mapDispatchToProps = {};

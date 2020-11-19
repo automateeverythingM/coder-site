@@ -1,4 +1,5 @@
 import produce from "immer";
+import { firestore } from "../../firebase";
 
 //! ******************************
 const SET_CURRENT_USER = "SET_CURRENT_USER";
@@ -10,6 +11,7 @@ export const SET_GITHUB_CREDENTIALS = "SET_GITHUB_CREDENTIALS";
 
 const initialState = {
     currentUser: null,
+    userDb: firestore,
     githubCredentialsToken: null,
     googleCredentials: null,
     isUserSignIn: false,
