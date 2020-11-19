@@ -11,7 +11,7 @@ export const SET_GITHUB_CREDENTIALS = "SET_GITHUB_CREDENTIALS";
 
 const initialState = {
     currentUser: null,
-    userDb: firestore,
+    userDb: null,
     githubCredentialsToken: null,
     googleCredentials: null,
     isUserSignIn: false,
