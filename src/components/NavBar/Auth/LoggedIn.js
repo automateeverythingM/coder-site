@@ -6,7 +6,7 @@ import { Button, Image, Nav, NavDropdown } from "react-bootstrap";
 import NotificationItemPopUp from "../../UI/Notification/NotificationItemPopUp";
 import NotifIcon from "../Notification/Icon/NotifIcon";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { singOutUser } from "../../../store/reducers/userReducer";
 
 const navItem = css`
@@ -23,14 +23,15 @@ const navItem = css`
     }
 `;
 
-export default function LoggedIn() {
+function LoggedIn({ user }) {
+    const { photoURL } = user;
     const dispatch = useDispatch();
     const userAvatar = (
         <Image
             style={{ width: "1.5em", height: "1.5em" }}
             className="border"
             roundedCircle
-            src="https://picsum.photos/50"
+            src={photoURL}
         />
     );
 
@@ -81,3 +82,11 @@ export default function LoggedIn() {
         </Nav>
     );
 }
+
+const mapStateToProps = (state) => ({
+    user: state.userReducer.currentUser,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoggedIn);
