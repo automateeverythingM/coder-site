@@ -18,7 +18,7 @@ const Button = styled.button`
     font-size: 1em;
     text-align: center;
     font-weight: 700;
-    background: ${(props) => props.background || "#DD4B39"};
+    background: ${(props) => props.background || "#dd4b39"};
     border: 0;
     outline: 0;
     border-radius: 0.3em;
@@ -28,7 +28,7 @@ const Button = styled.button`
     }
 
     &:active {
-        background: ${(props) => darken(0.1, props.background || "#DD4B39")};
+        background: ${(props) => darken(0.08, props.background || "#DD4B39")};
         outline: 0;
     }
 
@@ -43,6 +43,7 @@ const Button = styled.button`
 
     ${(props) =>
         props.onlySpinner &&
+        props.loading &&
         css`
             color: #ffffff00;
         `}
@@ -58,12 +59,10 @@ const rotate = keyframes`
   }
 `;
 
-export const ContainerSpinner = styled.div``;
-
 export const MSpinner = styled.div`
     display: inline-block;
-    width: ${(props) => props.size || "1.3rem"};
-    height: ${(props) => props.size || "1.3rem"};
+    width: ${(props) => props.size || "1.7rem"};
+    height: ${(props) => props.size || "1.7rem"};
     margin: 0 0.3em;
     border-radius: 50%;
     border-left: 0.3rem solid
@@ -79,9 +78,21 @@ export const MSpinner = styled.div`
         props.onlySpinner &&
         css`
             position: absolute;
+            margin: 0;
         `}
 
     animation: ${rotate} 0.7s infinite linear;
+`;
+
+export const ContainerSpinner = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.3em;
+    background: ${(props) => props.background || "black"};
 `;
 
 export default function ButtonWithIcon({
@@ -115,20 +126,22 @@ export default function ButtonWithIcon({
     };
 
     return (
-        <Button {...rest}>
+        <Button onlySpinner={onlySpinner} loading={loading} {...rest}>
             {Icon && (
                 <Icon
                     css={css`
                         position: absolute;
                         top: 0;
                         left: ${iconPosition === "left" && 0};
+                        right: ${iconPosition === "right" && 0};
                         height: 100%;
                         width: 4rem;
                         padding: 0.5em;
                         border-radius: 0;
                         text-align: center;
-                        font-size: 0.3em;
+                        font-size: 1em;
                         border-right: 3px solid whitesmoke;
+                        color: whitesmoke;
                     `}
                 />
             )}

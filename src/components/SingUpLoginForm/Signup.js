@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form";
 import { HiCheckCircle } from "react-icons/hi";
 import { ImGithub } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
+import { AiOutlineGoogle } from "react-icons/ai";
+import { FaGlobe } from "react-icons/fa";
+
 import sleep from "./sleep";
 import {
     setCurrentUser,
@@ -21,6 +24,7 @@ import md5 from "md5";
 import ButtonWithIcon, {
     MSpinner,
 } from "../UI/Buttons/ButtonWithIconAndLoader/ButtonWithIcon";
+import LoginSignup from "./LoginSignup";
 
 function Signup({
     signupNewUser,
@@ -55,7 +59,9 @@ function Signup({
                 dispatch(setFetchError(error));
             });
         await user.user.updateProfile({
-            photoURL: `http://gravatar.com/avatar/${md5(email)}`,
+            photoURL: `http://www.gravatar.com/avatar/${md5(
+                email
+            )}?d=identicon&s=280`,
             displayName: username,
         });
         //!redux saga
@@ -84,18 +90,6 @@ function Signup({
             });
 
         return isUserUnique;
-    };
-
-    const singUpWithGithub = async () => {
-        setSubmitting("github");
-        await getUserWithProvider(githubProvider, dispatch, setFetchError);
-        setSubmitting(false);
-    };
-
-    const signupWithGoogle = async () => {
-        setSubmitting("google");
-        await getUserWithProvider(googleProvider, dispatch, setFetchError);
-        setSubmitting(false);
     };
 
     return (
@@ -231,62 +225,13 @@ function Signup({
                             {serverFetchError.message}
                         </Alert>
                     )}
-                    <div className="mt-4">
-                        <ButtonWithLoadingDisable
-                            disabled={submitting}
-                            loading={submitting === "register"}
-                            block
-                            variant="danger"
-                            type="submit"
-                            AsSpinner={Spinner}
-                            spinnerProps={{
-                                animation: "border",
-                                variant: "white",
-                                size: "sm",
-                            }}
-                            onlySpinner
-                        >
-                            Register
-                        </ButtonWithLoadingDisable>
-                        <SignInButton
-                            variant="dark"
-                            disabled={submitting}
-                            loading={submitting === "github"}
-                            icon={
-                                <ImGithub
-                                    color="whitesmoke"
-                                    size="1.7rem"
-                                    className="h-100"
-                                />
-                            }
-                            spinnerProps={{
-                                animation: "border",
-                                variant: "light",
-                                size: "sm",
-                            }}
-                            onClick={singUpWithGithub}
-                            text="Sing up with Github"
-                            iconBorder="whitesmoke"
-                        />
-                        <SignInButton
-                            variant="danger"
-                            disabled={submitting}
-                            loading={submitting === "google"}
-                            icon={<FcGoogle size="1.7rem" />}
-                            text="Sing up with Google"
-                            iconBorder="#202122"
-                            onClick={signupWithGoogle}
-                            spinnerProps={{
-                                animation: "border",
-                                variant: "dark",
-                                size: "sm",
-                            }}
-                        />
-                    </div>
-                    <ButtonWithIcon background="#1A1B1C" loading onlySpinner>
-                        Registererere
-                    </ButtonWithIcon>
-                    <MSpinner size="3em" />
+                    <LoginSignup
+                        setFetchError={setFetchError}
+                        submitting={submitting}
+                        setSubmitting={setSubmitting}
+                        dispatch={dispatch}
+                    />
+
                     <div className="text-center mt-2">
                         Already have an account?{" "}
                         <b>
