@@ -22,6 +22,7 @@ const Button = styled.button`
     border: 0;
     outline: 0;
     border-radius: 0.3em;
+    margin-top: 1rem;
 
     &:hover {
         background: ${(props) => darken(0.05, props.background || "#DD4B39")};

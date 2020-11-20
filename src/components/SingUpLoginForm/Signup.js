@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Alert, Container, Form, InputGroup, Spinner } from "react-bootstrap";
-import classes from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import { HiCheckCircle } from "react-icons/hi";
 
+/** @jsxRuntime classic */
+/** @jsx jsx */
 import sleep from "./sleep";
 import {
     setCurrentUser,
@@ -12,9 +13,13 @@ import {
 import { Link, useHistory } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { auth } from "../../firebase";
-import { setFetchError } from "../../store/reducers/fetchError";
+import {
+    clearFetchError,
+    setFetchError,
+} from "../../store/reducers/fetchError";
 import md5 from "md5";
-import LoginSignup from "./LoginSignup";
+import LoginSignup from "./LoginSignupButtons";
+import { css, jsx } from "@emotion/react";
 
 function Signup({
     signupNewUser,
@@ -42,6 +47,7 @@ function Signup({
     const checkAsync = asyncCheckIn ? "rounded-right-0" : "rounded-right";
     const onSubmit = async (data) => {
         setSubmitting("register");
+        dispatch(clearFetchError());
         const { email, password, username } = data;
         const user = await auth
             .createUserWithEmailAndPassword(email, password)
@@ -83,155 +89,160 @@ function Signup({
     };
 
     return (
-        <Container className={classes.signupContainer}>
+        <Container
+            css={css`
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 5em;
+            `}
+        >
             <h1>Create account</h1>
             <h4 className="text-muted">
                 Fill all fields so people can find you easier
             </h4>
-            <div className={classes.signupFormWrapper}>
-                <Form
-                    noValidate
-                    onSubmit={handleSubmit(onSubmit)}
-                    className={`bg-dark text-white ${classes.signupForm}`}
-                >
-                    <Form.Group>
-                        <Form.Label>Username</Form.Label>
-                        <InputGroup className="rounded-right overflow-hidden">
-                            <Form.Control
-                                className={`border-right-0 shadow-none border-0 ${checkAsync}`}
-                                name="username"
-                                ref={register({
-                                    required: "Username is required",
-                                    minLength: {
-                                        value: 5,
-                                        message: "Minimum length is 5",
-                                    },
-                                    validate: async (value) => {
-                                        return (
-                                            usernameValidatePass ||
-                                            "Username is already taken"
-                                        );
-                                    },
-                                })}
-                                type="text"
-                                placeholder="Enter username"
-                                onChange={(e) =>
-                                    uniqueUsernameCheck(e.target.value)
-                                }
-                                isInvalid={
-                                    errors.username && !asyncCallInProgress
-                                }
-                            />
-                            {asyncCheckIn && (
-                                <InputGroup.Append className="d-flex align-items-center bg-white rounded-right px-2">
-                                    {usernameValidatePass ? (
-                                        <HiCheckCircle color="green" />
-                                    ) : (
-                                        <Spinner
-                                            animation="border"
-                                            role="status"
-                                            size="sm"
-                                            variant="dark"
-                                        />
-                                    )}
-                                </InputGroup.Append>
-                            )}
-                            <Form.Control.Feedback type="invalid">
-                                {errors.username && errors.username.message}
-                            </Form.Control.Feedback>
-                        </InputGroup>
 
-                        {/* <Form.Text>Username must be unique</Form.Text> */}
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label>Email</Form.Label>
+            <Form
+                noValidate
+                onSubmit={handleSubmit(onSubmit)}
+                className={`bg-dark text-white`}
+                css={css`
+                    padding: 2em;
+                    border-radius: 0.5em;
+                    max-width: 600px;
+                    width: 40em;
+                `}
+            >
+                <Form.Group>
+                    <Form.Label>Username</Form.Label>
+                    <InputGroup className="rounded-right overflow-hidden">
                         <Form.Control
-                            name="email"
+                            className={`border-right-0 shadow-none border-0 ${checkAsync}`}
+                            name="username"
                             ref={register({
-                                required: "Email is required",
-                                pattern: {
-                                    value: /^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$/,
-                                    message: "Please enter a valid email",
+                                required: "Username is required",
+                                minLength: {
+                                    value: 5,
+                                    message: "Minimum length is 5",
                                 },
-                            })}
-                            type="email"
-                            placeholder="Enter email"
-                            isInvalid={errors.email && errors.email.message}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.email && errors.email.message}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control
-                            name="password"
-                            ref={register({
-                                required: "Password is required",
-                                pattern: {
-                                    value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/,
-                                    message:
-                                        "Password must contains capital letter and number",
-                                },
-                            })}
-                            type="password"
-                            placeholder="Password"
-                            isInvalid={
-                                errors.password && errors.password.message
-                            }
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            {errors.password && errors.password.message}
-                        </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Label>Confirm password</Form.Label>
-                        <Form.Control
-                            name="confirmPassword"
-                            ref={register({
-                                required: "Please confirm password",
-                                validate: (value) => {
+                                validate: async (value) => {
                                     return (
-                                        value === getValues().password ||
-                                        "Confirm password don`t match"
+                                        usernameValidatePass ||
+                                        "Username is already taken"
                                     );
                                 },
                             })}
-                            type="password"
-                            placeholder="Confirm password"
-                            isInvalid={
-                                errors.confirmPassword &&
-                                errors.confirmPassword.message
+                            type="text"
+                            placeholder="Enter username"
+                            onChange={(e) =>
+                                uniqueUsernameCheck(e.target.value)
                             }
+                            isInvalid={errors.username && !asyncCallInProgress}
                         />
+                        {asyncCheckIn && (
+                            <InputGroup.Append className="d-flex align-items-center bg-white rounded-right px-2">
+                                {usernameValidatePass ? (
+                                    <HiCheckCircle color="green" />
+                                ) : (
+                                    <Spinner
+                                        animation="border"
+                                        role="status"
+                                        size="sm"
+                                        variant="dark"
+                                    />
+                                )}
+                            </InputGroup.Append>
+                        )}
                         <Form.Control.Feedback type="invalid">
-                            {errors.confirmPassword &&
-                                errors.confirmPassword.message}
+                            {errors.username && errors.username.message}
                         </Form.Control.Feedback>
-                    </Form.Group>
-                    {serverFetchError && (
-                        <Alert className="text-center" variant="danger">
-                            {serverFetchError.message}
-                        </Alert>
-                    )}
-                    <LoginSignup
-                        setFetchError={setFetchError}
-                        submitting={submitting}
-                        setSubmitting={setSubmitting}
-                        dispatch={dispatch}
-                    />
+                    </InputGroup>
+                </Form.Group>
 
-                    <div className="text-center mt-2">
-                        Already have an account?{" "}
-                        <b>
-                            <Link className="text-warning" to="/login">
-                                Login
-                            </Link>
-                        </b>
-                    </div>
-                </Form>
-            </div>
+                <Form.Group>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                        name="email"
+                        ref={register({
+                            required: "Email is required",
+                            pattern: {
+                                value: /^([A-Z|a-z|0-9](\.|_){0,1})+[A-Z|a-z|0-9]\@([A-Z|a-z|0-9])+((\.){0,1}[A-Z|a-z|0-9]){2}\.[a-z]{2,3}$/,
+                                message: "Please enter a valid email",
+                            },
+                        })}
+                        type="email"
+                        placeholder="Enter email"
+                        isInvalid={errors.email && errors.email.message}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.email && errors.email.message}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                        name="password"
+                        ref={register({
+                            required: "Password is required",
+                            pattern: {
+                                value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/,
+                                message:
+                                    "Password must contains capital letter and number",
+                            },
+                        })}
+                        type="password"
+                        placeholder="Password"
+                        isInvalid={errors.password && errors.password.message}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.password && errors.password.message}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Confirm password</Form.Label>
+                    <Form.Control
+                        name="confirmPassword"
+                        ref={register({
+                            required: "Please confirm password",
+                            validate: (value) => {
+                                return (
+                                    value === getValues().password ||
+                                    "Confirm password don`t match"
+                                );
+                            },
+                        })}
+                        type="password"
+                        placeholder="Confirm password"
+                        isInvalid={
+                            errors.confirmPassword &&
+                            errors.confirmPassword.message
+                        }
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.confirmPassword &&
+                            errors.confirmPassword.message}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                {serverFetchError && (
+                    <Alert className="text-center" variant="danger">
+                        {serverFetchError.message}
+                    </Alert>
+                )}
+                <LoginSignup
+                    submitting={submitting}
+                    setSubmitting={setSubmitting}
+                />
+
+                <div className="text-center mt-2">
+                    Already have an account?{" "}
+                    <b>
+                        <Link className="text-warning" to="/login">
+                            Login
+                        </Link>
+                    </b>
+                </div>
+            </Form>
         </Container>
     );
 }

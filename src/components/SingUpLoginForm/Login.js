@@ -13,6 +13,7 @@ import { loginUser, setCurrentUser } from "../../store/reducers/userReducer";
 import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import SignInButton from "../UI/Buttons/SingInButton";
 import getUserWithProvider from "./authProvider";
+import LoginSignupButtons from "./LoginSignupButtons";
 import sleep from "./sleep";
 
 const container = css`
@@ -55,14 +56,6 @@ function Login({ serverFetchError, isUserAuthenticated }) {
         if (user) history.push("/");
     };
 
-    const loginWithGithub = async () => {
-        await getUserWithProvider(githubProvider, dispatch, setFetchError);
-    };
-
-    const loginWithGoogle = async () => {
-        await getUserWithProvider(googleProvider, dispatch, setFetchError);
-    };
-
     return (
         <Container css={container}>
             <h1>Login</h1>
@@ -93,34 +86,11 @@ function Login({ serverFetchError, isUserAuthenticated }) {
                         {serverFetchError.message}
                     </Alert>
                 )}
-                <div className="mt-4">
-                    <ButtonWithLoadingDisable
-                        disabled={submitting}
-                        type="submit"
-                        onlySpinner
-                        block
-                        size="md"
-                        variant="danger"
-                        spinnerProps={{ animation: "border", variant: "white" }}
-                        onClick={() => {}}
-                    >
-                        Login
-                    </ButtonWithLoadingDisable>
-                    <SignInButton
-                        variant="light"
-                        icon={<ImGithub size="1.7rem" color="#202122" />}
-                        text="Login with Github"
-                        iconBorder="#202122"
-                        onClick={loginWithGithub}
-                    />
-                    <SignInButton
-                        variant="light"
-                        icon={<FcGoogle size="1.7rem" />}
-                        text="Login with Google"
-                        iconBorder="#202122"
-                        onClick={loginWithGoogle}
-                    />
-                </div>
+
+                <LoginSignupButtons
+                    submitting={submitting}
+                    setSubmitting={setSubmitting}
+                />
 
                 <div className="text-center mt-2">
                     Don`t have account?{" "}

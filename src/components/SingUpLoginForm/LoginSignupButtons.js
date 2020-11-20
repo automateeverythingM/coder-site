@@ -2,24 +2,27 @@ import React from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { FaGlobe } from "react-icons/fa";
 import { ImGithub } from "react-icons/im";
+import { useDispatch } from "react-redux";
 import { githubProvider, googleProvider } from "../../firebase";
+import {
+    clearFetchError,
+    setFetchError,
+} from "../../store/reducers/fetchError";
 import ButtonWithIcon from "../UI/Buttons/ButtonWithIconAndLoader/ButtonWithIcon";
 import getUserWithProvider from "./authProvider";
 
-export default function LoginSignup({
-    submitting,
-    setSubmitting,
-    setFetchError,
-    dispatch,
-}) {
+export default function LoginSignup({ submitting, setSubmitting }) {
+    const dispatch = useDispatch();
     const singUpWithGithub = async () => {
         setSubmitting("github");
+        dispatch(clearFetchError());
         await getUserWithProvider(githubProvider, dispatch, setFetchError);
         setSubmitting(false);
     };
 
     const signupWithGoogle = async () => {
         setSubmitting("google");
+        dispatch(setFetchError());
         await getUserWithProvider(googleProvider, dispatch, setFetchError);
         setSubmitting(false);
     };
