@@ -4,13 +4,14 @@ import { Button, Spinner } from "react-bootstrap";
 export default function ButtonWithLoadingDisable({
     disabled,
     children,
+    loading,
     AsSpinner = Spinner,
     spinnerProps,
     onlySpinner,
     ...props
 }) {
     const displayChildren = () => {
-        if (onlySpinner && disabled) {
+        if (onlySpinner && loading) {
             return null;
         } else {
             return children;
@@ -19,7 +20,7 @@ export default function ButtonWithLoadingDisable({
 
     return (
         <Button disabled={disabled} {...props}>
-            {disabled && <AsSpinner {...spinnerProps} />}
+            {loading && <AsSpinner {...spinnerProps} />}
             {displayChildren()}
         </Button>
     );

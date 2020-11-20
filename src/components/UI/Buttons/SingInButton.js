@@ -9,12 +9,17 @@ export default function SingInButton({
     text,
     variant = "dark",
     iconBorder = "white",
+    disabled,
+    onClick,
+    loading,
+    onlySpinner = true,
+    spinnerProps,
     ...rest
 }) {
     return (
         <FormGroup
             {...rest}
-            className="w-100 btn btn-light d-flex p-0 mt-3 rounded border overflow-hidden align-items-center mb-0"
+            className={`w-100 btn btn-${variant} d-flex p-0 mt-3 rounded border overflow-hidden align-items-center mb-0`}
         >
             <div
                 css={css`
@@ -28,8 +33,13 @@ export default function SingInButton({
             </div>
             <ButtonWithLoadingDisable
                 block
-                className="mt-0 border-0 shadow-none"
-                variant="white"
+                className="mt-0 border-0 shadow-none font-weight-bold"
+                variant={variant}
+                disabled={disabled}
+                loading={loading}
+                spinnerProps={spinnerProps}
+                onlySpinner={onlySpinner}
+                onClick={onClick}
             >
                 {text}
             </ButtonWithLoadingDisable>
