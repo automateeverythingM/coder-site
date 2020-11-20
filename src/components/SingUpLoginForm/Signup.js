@@ -3,27 +3,17 @@ import { Alert, Container, Form, InputGroup, Spinner } from "react-bootstrap";
 import classes from "./styles.module.css";
 import { useForm } from "react-hook-form";
 import { HiCheckCircle } from "react-icons/hi";
-import { ImGithub } from "react-icons/im";
-import { FcGoogle } from "react-icons/fc";
-import { AiOutlineGoogle } from "react-icons/ai";
-import { FaGlobe } from "react-icons/fa";
 
 import sleep from "./sleep";
 import {
     setCurrentUser,
     signupUserINREDUCER,
 } from "../../store/reducers/userReducer";
-import SignInButton from "../UI/Buttons/SingInButton";
-import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
 import { Link, useHistory } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { auth, githubProvider, googleProvider } from "../../firebase";
+import { auth } from "../../firebase";
 import { setFetchError } from "../../store/reducers/fetchError";
-import getUserWithProvider from "./authProvider";
 import md5 from "md5";
-import ButtonWithIcon, {
-    MSpinner,
-} from "../UI/Buttons/ButtonWithIconAndLoader/ButtonWithIcon";
 import LoginSignup from "./LoginSignup";
 
 function Signup({
