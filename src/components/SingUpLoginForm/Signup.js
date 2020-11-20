@@ -232,6 +232,7 @@ function Signup({
                 <LoginSignup
                     submitting={submitting}
                     setSubmitting={setSubmitting}
+                    isSignup
                 />
 
                 <div className="text-center mt-2">

@@ -11,7 +11,7 @@ import {
 import ButtonWithIcon from "../UI/Buttons/ButtonWithIconAndLoader/ButtonWithIcon";
 import getUserWithProvider from "./authProvider";
 
-export default function LoginSignup({ submitting, setSubmitting }) {
+export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
     const dispatch = useDispatch();
     const singUpWithGithub = async () => {
         setSubmitting("github");
@@ -19,7 +19,9 @@ export default function LoginSignup({ submitting, setSubmitting }) {
         await getUserWithProvider(githubProvider, dispatch, setFetchError);
         setSubmitting(false);
     };
-
+    const { google, github } = isSignup
+        ? { google: "Sign up with Google", github: "Sign up with Github" }
+        : { google: "Login with Google", github: "Login with Github" };
     const signupWithGoogle = async () => {
         setSubmitting("google");
         dispatch(setFetchError());
@@ -48,7 +50,7 @@ export default function LoginSignup({ submitting, setSubmitting }) {
                 icon={ImGithub}
                 onClick={singUpWithGithub}
             >
-                Sign in with Github
+                {github}
             </ButtonWithIcon>
             <ButtonWithIcon
                 disabled={submitting}
@@ -58,7 +60,7 @@ export default function LoginSignup({ submitting, setSubmitting }) {
                 icon={AiOutlineGoogle}
                 onClick={signupWithGoogle}
             >
-                Sign in with Google
+                {google}
             </ButtonWithIcon>
         </div>
     );
