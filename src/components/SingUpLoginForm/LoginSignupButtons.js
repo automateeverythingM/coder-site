@@ -32,7 +32,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
         <div className="mt-4">
             <ButtonWithIcon
                 background="teal"
-                disabled={submitting}
+                disabled={!!submitting}
                 loading={submitting === "register"}
                 onlySpinner
                 block
@@ -43,7 +43,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
             </ButtonWithIcon>
             <ButtonWithIcon
                 background="#24292E"
-                disabled={submitting}
+                disabled={!!submitting}
                 loading={submitting === "github"}
                 onlySpinner
                 block
@@ -53,7 +53,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
                 {github}
             </ButtonWithIcon>
             <ButtonWithIcon
-                disabled={submitting}
+                disabled={!!submitting}
                 loading={submitting === "google"}
                 onlySpinner
                 block
