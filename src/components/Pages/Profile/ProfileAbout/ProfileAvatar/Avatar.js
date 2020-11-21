@@ -66,12 +66,15 @@ function Avatar({ user }) {
             onMouseLeave={() => setShowEdit("hidden")}
         >
             <Image
-                style={{ width: "280px", height: "280px", objectFit: "cover" }}
                 fluid
                 roundedCircle
                 src={imgPreview ? imgPreview : photoURL}
                 className={`${!imgLoading && "border"}`}
                 onLoad={handleImageLoaded}
+                css={css`
+                    min-width: 100%;
+                    min-height: 100%;
+                `}
             />
             {imgLoading && (
                 <Spinner

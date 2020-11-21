@@ -1,18 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Alert, Container, Form } from "react-bootstrap";
-import { FcGoogle } from "react-icons/fc";
-import { ImGithub } from "react-icons/im";
 import { connect, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { auth, githubProvider, googleProvider } from "../../firebase";
+import { auth } from "../../firebase";
 import { setFetchError } from "../../store/reducers/fetchError";
 import { loginUser, setCurrentUser } from "../../store/reducers/userReducer";
-import ButtonWithLoadingDisable from "../UI/Buttons/ButtonWithLoadingDisable";
-import SignInButton from "../UI/Buttons/SingInButton";
-import getUserWithProvider from "./authProvider";
 import LoginSignupButtons from "./LoginSignupButtons";
 import sleep from "./sleep";
 
