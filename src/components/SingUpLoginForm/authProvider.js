@@ -1,5 +1,5 @@
-import { auth, firestore } from "../../firebase";
-
+import { auth } from "../../firebase";
+import saveProviderUser from "./saveProviderUser";
 export default async function getUserWithProviderSignUp(
     provider,
     dispatch,
@@ -8,29 +8,16 @@ export default async function getUserWithProviderSignUp(
     return auth
         .signInWithPopup(provider)
         .then(function (result) {
-            console.log("result", result);
-            if (result.additionalUserInfo.isNewUser) {
-                firestore
-                    .collection("users")
-                    .doc(result.user.uid)
-                    .set({ ...result.additionalUserInfo.profile });
+            const { user, additionalUserInfo } = result;
+            if (additionalUserInfo.isNewUser) {
+                saveProviderUser(
+                    user,
+                    additionalUserInfo.profile,
+                    additionalUserInfo.providerId
+                );
             }
-
-            // console.log("result.credential", result.credential);
-            // console.log("token", token);
-            // The signed-in user info.
-            // ...
         })
         .catch(function (error) {
-            console.log("error", error);
-            // Handle Errors here.
             dispatch(setError(error));
-            // var errorCode = error.code;
-            // var errorMessage = error.message;
-            // // The email of the user's account used.
-            // var email = error.email;
-            // // The firebase.auth.AuthCredential type that was used.
-            // var credential = error.credential;
-            // ...
         });
 }

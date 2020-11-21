@@ -12,7 +12,7 @@ import {
 } from "../../store/reducers/userReducer";
 import { Link, useHistory } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import { auth } from "../../firebase";
+import { auth, database } from "../../firebase";
 import {
     clearFetchError,
     setFetchError,
@@ -49,24 +49,38 @@ function Signup({
         setSubmitting("register");
         dispatch(clearFetchError());
         const { email, password, username } = data;
-        const user = await auth
-            .createUserWithEmailAndPassword(email, password)
-            .catch((error) => {
-                dispatch(setFetchError(error));
-            });
-        await user.user.updateProfile({
-            photoURL: `http://www.gravatar.com/avatar/${md5(
-                email
-            )}?d=identicon&s=280`,
+
+        try {
+            const userRef = await auth.createUserWithEmailAndPassword(
+                email,
+                password
+            );
+
+            await updateUser(userRef, username, email);
+            await saveUser(userRef.user, userRef.additionalUserInfo.providerId);
+            setCurrentUser(userRef.user);
+            setSubmitting(false);
+            if (userRef) history.push("/");
+        } catch (error) {
+            dispatch(setFetchError(error));
+        }
+    };
+
+    const updateUser = (userRef, username, email) => {
+        const url = `http://www.gravatar.com/avatar/${md5(email)}?d=identicon`;
+        return userRef.user.updateProfile({
+            photoURL: url,
             displayName: username,
         });
-        //!redux saga
-        // signupNewUser(data);
+    };
 
-        //
-        setCurrentUser(user);
-        setSubmitting(false);
-        if (user) history.push("/");
+    const saveUser = (user, provider) => {
+        return database.ref("users").child(user.uid).set({
+            name: user.displayName,
+            avatar_url: user.photoURL,
+            email: user.email,
+            provider,
+        });
     };
 
     const uniqueUsernameCheck = async (name) => {
@@ -76,7 +90,7 @@ function Signup({
         if (name.length < 5) return;
         setAsyncCallInProgress(true);
         const isUserUnique = !namesArray.includes(name);
-        await sleep(2000);
+        await sleep(1000);
         setAsyncCallInProgress(false);
         setUsernameValidatePass(isUserUnique);
         if (!isUserUnique)
