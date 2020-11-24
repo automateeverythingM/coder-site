@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {
     setSelectFilter,
     toggleFilterList,
-} from "../../../store/reducers/searchReducer";
+} from "../../../../../store/reducers/searchReducer";
 function Selection({
     data,
     selected,

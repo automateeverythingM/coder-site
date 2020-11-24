@@ -14,7 +14,7 @@ import {
     assignInputRef,
     setAutoSuggestionAndCaseSensitive,
     setAutocompleteList,
-} from "../../../store/reducers/searchReducer";
+} from "../../../../../store/reducers/searchReducer";
 import {
     CloseButton,
     Input,

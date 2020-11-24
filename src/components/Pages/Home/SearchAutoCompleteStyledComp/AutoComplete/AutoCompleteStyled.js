@@ -4,7 +4,7 @@ import {
     autocompleteListItemClick,
     autocompleteListMouseEnter,
     setSelector,
-} from "../../../store/reducers/searchReducer";
+} from "../../../../../store/reducers/searchReducer";
 import { Li, UlDropdown } from "../StyledComp";
 
 function AutoCompleteStyled({

@@ -3,9 +3,9 @@
 import { css, jsx } from "@emotion/react";
 import React from "react";
 import { Button } from "react-bootstrap";
-import HeroPractice from "../../Hero/HeroPractice";
-import HeroRejected from "../../Hero/HeroRejected";
-import HeroSearch from "../../Hero/HeroSearch";
+import HeroPractice from "./Hero/HeroPractice";
+import HeroRejected from "./Hero/HeroRejected";
+import HeroSearch from "./Hero/HeroSearch";
 import { store } from "react-notifications-component";
 import "animate.css/animate.compat.css";
 import NotificationItemPopUp from "../../UI/Notification/NotificationItemPopUp";

@@ -1,0 +1,33 @@
+.herolvl1 {
+    min-height: 30em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.watermelon {
+    background-image: url("../../../../img/reworkWatermelon.svg");
+    background-repeat: no-repeat;
+}
+.teamUp {
+    background-image: url("../../../../img/GroupOfPeopleTeamUp.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.ideaLight {
+    background-image: url("../../../../img/lights.svg");
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.ideaLight h2 {
+    mix-blend-mode: difference;
+}
+.ideaLight h3 {
+    mix-blend-mode: difference;
+}
+
+.lights {
+    width: 100%;
+    height: 100%;
+}

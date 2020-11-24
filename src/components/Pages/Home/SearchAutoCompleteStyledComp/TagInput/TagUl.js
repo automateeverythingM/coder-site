@@ -2,7 +2,7 @@ import React from "react";
 import { Ul } from "../StyledComp";
 import Tag from "./Tag";
 import { connect } from "react-redux";
-import { deleteTag } from "../../../store/reducers/searchReducer";
+import { deleteTag } from "../../../../../store/reducers/searchReducer";
 function TagUl({ tagList, handleDeleteTag }) {
     function handleDeleteClick(e) {
         const id = e?.target?.dataset?.id;

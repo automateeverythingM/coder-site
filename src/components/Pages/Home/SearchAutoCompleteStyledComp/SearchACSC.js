@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import AutoCompleteStyled from "./AutoComplete/AutoCompleteStyled";
 import InputStyled from "./Input/InputStyled";
-import mockStates from "../../store/mocks/inputAutoComplete";
+import mockStates from "../../../../store/mocks/inputAutoComplete";
 import { RelativeContainer } from "./StyledComp";
 import { connect } from "react-redux";
 import {
     fetchAutoCompleteList,
     setAutocompleteList,
-} from "../../store/reducers/searchReducer";
+} from "../../../../store/reducers/searchReducer";
 
 function SearchACSC({
     autocompleteList,
