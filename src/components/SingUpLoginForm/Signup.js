@@ -21,12 +21,7 @@ import md5 from "md5";
 import LoginSignup from "./LoginSignupButtons";
 import { css, jsx } from "@emotion/react";
 
-function Signup({
-    signupNewUser,
-    serverFetchError,
-    isUserCreated,
-    isUserAuthenticated,
-}) {
+function Signup({ serverFetchError }) {
     const {
         register,
         handleSubmit,
@@ -265,8 +260,6 @@ function Signup({
 const mapStateToProps = ({ errors, userReducer }) => {
     return {
         serverFetchError: errors.serverFetchError,
-        isUserCreated: userReducer.currentUser,
-        isUserAuthenticated: !!userReducer.currentUser,
     };
 };
 

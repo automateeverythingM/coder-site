@@ -33,7 +33,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
             <ButtonWithIcon
                 background="teal"
                 disabled={!!submitting}
-                loading={submitting === "register"}
+                loading={!!(submitting === "register")}
                 onlySpinner
                 block
                 icon={FaGlobe}
@@ -44,7 +44,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
             <ButtonWithIcon
                 background="#24292E"
                 disabled={!!submitting}
-                loading={submitting === "github"}
+                loading={!!(submitting === "github")}
                 onlySpinner
                 block
                 icon={ImGithub}
@@ -54,7 +54,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
             </ButtonWithIcon>
             <ButtonWithIcon
                 disabled={!!submitting}
-                loading={submitting === "google"}
+                loading={!!(submitting === "google")}
                 onlySpinner
                 block
                 icon={AiOutlineGoogle}

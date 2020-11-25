@@ -25,22 +25,17 @@ const form = css`
     width: 60%;
 `;
 
-function Login({ serverFetchError, isUserAuthenticated }) {
+function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
     const [submitting, setSubmitting] = useState(false);
-    const dispatch = useDispatch();
     const history = useHistory();
-    const email = useRef();
-    const password = useRef();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const { email, password } = e.target;
         setSubmitting(true);
         sleep(5000);
         const user = await auth
-            .signInWithEmailAndPassword(
-                email.current.value,
-                password.current.value
-            )
+            .signInWithEmailAndPassword(email.value, password.value)
             .catch((error) => {
                 dispatch(setFetchError(error));
             });
@@ -62,16 +57,12 @@ function Login({ serverFetchError, isUserAuthenticated }) {
             >
                 <Form.Group>
                     <Form.Label>Username or email</Form.Label>
-                    <Form.Control
-                        ref={email}
-                        placeholder="Enter username or email"
-                    />
+                    <Form.Control placeholder="Enter username or email" />
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                        ref={password}
                         type="password"
                         placeholder="Enter Password"
                     />
@@ -106,8 +97,5 @@ const mapStateToProps = (state) => {
         isUserAuthenticated: !!state.userReducer.currentUser,
     };
 };
-const mapDispatchToProps = (dispatch) => {
-    return {};
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps)(Login);

@@ -1,5 +1,4 @@
 import produce from "immer";
-import { firestore } from "../../firebase";
 
 //! ******************************
 const SET_CURRENT_USER = "SET_CURRENT_USER";
@@ -8,13 +7,10 @@ export const LOG_OUT_USER = "LOG_OUT_USER";
 const IS_LOGGED_IN = "IS_LOGGED_IN";
 export const LOGIN = "LOGIN";
 export const SET_GITHUB_CREDENTIALS = "SET_GITHUB_CREDENTIALS";
-
+export const SET_USER_PROFILE_DATA = "SET_USER_PROFILE_DATA";
 const initialState = {
     currentUser: null,
-    userDb: null,
-    githubCredentialsToken: null,
-    googleCredentials: null,
-    isUserSignIn: false,
+    userProfileData: null,
 };
 
 //! ***********************
@@ -44,6 +40,10 @@ export function isLoggedIn() {
     return { type: IS_LOGGED_IN };
 }
 
+export function setUserProfileData(userProfileData) {
+    return { type: SET_USER_PROFILE_DATA, payload: { userProfileData } };
+}
+
 export default function userReducer(state = initialState, action) {
     const { type, payload } = action;
     return produce(state, (draft) => {
@@ -53,6 +53,10 @@ export default function userReducer(state = initialState, action) {
                 break;
             case SET_GITHUB_CREDENTIALS:
                 draft.githubCredentialsToken = payload.credentials;
+                break;
+
+            case SET_USER_PROFILE_DATA:
+                draft.userProfileData = payload.userProfileData;
                 break;
             default:
                 break;
