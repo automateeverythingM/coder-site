@@ -6,7 +6,7 @@ import { css, jsx, keyframes } from "@emotion/react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { darken, grayscale, transparentize } from "polished";
 
-const Button = styled.button`
+export const MButton = styled.button`
     position: relative;
     display: flex;
     justify-content: center;
@@ -25,11 +25,11 @@ const Button = styled.button`
     margin-top: 1rem;
 
     &:hover {
-        background: ${(props) => darken(0.05, props.background || "#DD4B39")};
+        background: ${(props) => darken(0.03, props.background || "#DD4B39")};
     }
 
     &:active {
-        background: ${(props) => darken(0.08, props.background || "#DD4B39")};
+        background: ${(props) => darken(0.05, props.background || "#DD4B39")};
         outline: 0;
     }
 
@@ -39,7 +39,7 @@ const Button = styled.button`
     &:focus {
         outline: 0;
         box-shadow: 0 0 0 2px
-            ${(props) => darken(0.2, props.background || "#DD4B39")};
+            ${(props) => darken(0.1, props.background || "#DD4B39")};
     }
 
     ${(props) =>
@@ -127,7 +127,7 @@ export default function ButtonWithIcon({
     };
 
     return (
-        <Button onlySpinner={onlySpinner} loading={loading} {...rest}>
+        <MButton onlySpinner={onlySpinner} loading={loading} {...rest}>
             {Icon && (
                 <Icon
                     css={css`
@@ -147,6 +147,6 @@ export default function ButtonWithIcon({
                 />
             )}
             {displayChildren()}
-        </Button>
+        </MButton>
     );
 }

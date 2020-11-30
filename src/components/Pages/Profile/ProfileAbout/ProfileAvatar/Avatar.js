@@ -1,14 +1,16 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
-import React, { useState } from "react";
-import { Button, Image, Modal, Spinner } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import { Image, Modal, Spinner } from "react-bootstrap";
 import { TiArrowUpThick } from "react-icons/ti";
 import ReactImageUploadComponent from "react-images-upload";
 import { connect } from "react-redux";
 import { database, storage } from "../../../../../firebase";
-import Resizer from "react-image-file-resizer";
 import AvatarEditor from "react-avatar-editor";
+import ButtonWithIcon, {
+    MButton,
+} from "../../../../UI/Buttons/ButtonWithIconAndLoader/ButtonWithIcon";
 
 function Avatar({ userProfileData, uid }) {
     const [showEdit, setShowEdit] = useState("hidden");
@@ -17,51 +19,47 @@ function Avatar({ userProfileData, uid }) {
     const [imgLoading, setImgLoading] = useState(true);
     const [userRef] = useState(database.ref("users").child(uid));
     const [showModal, setShowModal] = useState(false);
+    const editor = useRef();
     const { avatar_url } = userProfileData;
 
-    const handleCloseModal = () => setShowModal(false);
-    const handleOpenModal = () => setShowModal(true);
+    const handleCloseModal = () => {
+        setFileLoaded(null);
+        setShowModal(false);
+        setImgLoading(false);
+    };
 
-    const resizeFile = (file) =>
-        new Promise((resolve) => {
-            Resizer.imageFileResizer(
-                file,
-                300,
-                300,
-                "JPEG",
-                80,
-                0,
-                (uri) => {
-                    resolve(uri);
-                },
-                "blob",
-                280,
-                280
-            );
-        });
+    const handleImageUpload = async () => {
+        // const canvas = editor.current.getImage();
+        const imgDataUrl = editor.current.getImageScaledToCanvas().toDataURL();
+
+        setImgPreview(imgDataUrl);
+
+        try {
+            const response = await fetch(imgDataUrl);
+            const blob = await response.blob();
+            const fileRef = storage.child("avatars").child(uid);
+            await fileRef.put(blob);
+            const url = await fileRef.getDownloadURL();
+            await userRef.update({ avatar_url: url });
+        } catch (error) {
+            console.log(error.message);
+        }
+        handleCloseModal();
+    };
+
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
 
     const handleChange = async (files) => {
         setImgLoading(true);
         const file = files[0];
-        setFileLoaded(file);
-        handleOpenModal();
-
-        // const reader = new FileReader();
-        // reader.onloadend = () => {
-        //     setImgPreview(reader.result);
-        // };
-        // reader.readAsDataURL(file);
-
-        //! ***********************
-        // const fileRef = await storage.child(file.name);
-        // const image = await resizeFile(file);
-        // console.log("Avatar -> image", image);
-        // await fileRef.put(image).catch((error) => console.log(error));
-
-        // const url = await fileRef.getDownloadURL();
-        // await userRef.update({ avatar_url: url });
-        // setImgLoading(false);
+        if (file) {
+            setFileLoaded(file);
+            handleOpenModal();
+        }
     };
+
     const handleImageLoaded = () => {
         setImgLoading(false);
     };
@@ -138,15 +136,20 @@ function Avatar({ userProfileData, uid }) {
                         image={fileLoaded}
                         width={280}
                         height={280}
-                        border={2}
+                        border={50}
                         color={[0, 0, 0, 0.7]} // RGBA
-                        scale={1}
-                        rotate={0}
+                        scale={1.2}
+                        rotate={1}
                         borderRadius={140}
+                        ref={editor}
                     />
                 </Modal.Body>
-                <Button variant="danger">Cancel</Button>
-                <Button variant="dark">Upload</Button>
+                <ButtonWithIcon
+                    background="#90be6d"
+                    onClick={handleImageUpload}
+                >
+                    Update
+                </ButtonWithIcon>
             </Modal>
         </div>
     );
