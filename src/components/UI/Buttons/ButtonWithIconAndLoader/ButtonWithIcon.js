@@ -12,17 +12,17 @@ export const MButton = styled.button`
     justify-content: center;
     align-items: center;
     width: ${(props) => (props.block ? "100%" : "")};
-    padding: 0.7em 0.9em;
+    padding: 0.7rem 0.9rem;
     color: ${(props) => props.color || "white"};
     vertical-align: middle;
-    font-size: 1em;
+    font-size: 1rem;
     text-align: center;
     font-weight: 700;
     background: ${(props) => props.background || "#dd4b39"};
     border: 0;
     outline: 0;
-    border-radius: 0.3em;
-    margin-top: 1rem;
+    border-radius: 0.3rem;
+    margin-right: 0.25rem;
 
     &:hover {
         background: ${(props) => darken(0.03, props.background || "#DD4B39")};
@@ -64,7 +64,7 @@ export const MSpinner = styled.div`
     display: inline-block;
     width: ${(props) => props.size || "1.7rem"};
     height: ${(props) => props.size || "1.7rem"};
-    margin: 0 0.3em;
+    margin: 0 0.3rem;
     border-radius: 50%;
     border-left: 0.3rem solid
         ${(props) => transparentize(0.7, props.background || "whitesmoke")};
@@ -92,7 +92,7 @@ export const ContainerSpinner = styled.div`
     justify-content: center;
     width: 100%;
     height: 100%;
-    border-radius: 0.3em;
+    border-radius: 0.3rem;
     background: ${(props) => props.background || "black"};
 `;
 
@@ -137,10 +137,10 @@ export default function ButtonWithIcon({
                         right: ${iconPosition === "right" && 0};
                         height: 100%;
                         width: 4rem;
-                        padding: 0.5em;
+                        padding: 0.5rem;
                         border-radius: 0;
                         text-align: center;
-                        font-size: 1em;
+                        font-size: 1rem;
                         border-right: 3px solid whitesmoke;
                         color: whitesmoke;
                     `}

@@ -1,54 +1,26 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
-import React, { useRef, useState } from "react";
-import { Image, Modal, Spinner } from "react-bootstrap";
+import React, { Suspense, useState, lazy } from "react";
+import { Image, Spinner } from "react-bootstrap";
 import { TiArrowUpThick } from "react-icons/ti";
 import ReactImageUploadComponent from "react-images-upload";
 import { connect } from "react-redux";
-import { database, storage } from "../../../../../firebase";
-import AvatarEditor from "react-avatar-editor";
-import ButtonWithIcon, {
-    MButton,
-} from "../../../../UI/Buttons/ButtonWithIconAndLoader/ButtonWithIcon";
+const ImageUploadModal = lazy(() => import("./ImageUploadModal"));
 
-function Avatar({ userProfileData, uid }) {
+function Avatar({ userProfileData }) {
+    const [showModal, setShowModal] = useState(false);
     const [showEdit, setShowEdit] = useState("hidden");
     const [fileLoaded, setFileLoaded] = useState(null);
     const [imgPreview, setImgPreview] = useState(null);
     const [imgLoading, setImgLoading] = useState(true);
-    const [userRef] = useState(database.ref("users").child(uid));
-    const [showModal, setShowModal] = useState(false);
-    const editor = useRef();
+
     const { avatar_url } = userProfileData;
 
     const handleCloseModal = () => {
-        setFileLoaded(null);
         setShowModal(false);
+        setFileLoaded(null);
         setImgLoading(false);
-    };
-
-    const handleImageUpload = async () => {
-        // const canvas = editor.current.getImage();
-        const imgDataUrl = editor.current.getImageScaledToCanvas().toDataURL();
-
-        setImgPreview(imgDataUrl);
-
-        try {
-            const response = await fetch(imgDataUrl);
-            const blob = await response.blob();
-            const fileRef = storage.child("avatars").child(uid);
-            await fileRef.put(blob);
-            const url = await fileRef.getDownloadURL();
-            await userRef.update({ avatar_url: url });
-        } catch (error) {
-            console.log(error.message);
-        }
-        handleCloseModal();
-    };
-
-    const handleOpenModal = () => {
-        setShowModal(true);
     };
 
     const handleChange = async (files) => {
@@ -60,9 +32,14 @@ function Avatar({ userProfileData, uid }) {
         }
     };
 
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+
     const handleImageLoaded = () => {
         setImgLoading(false);
     };
+
     return (
         <div
             css={css`
@@ -123,34 +100,15 @@ function Avatar({ userProfileData, uid }) {
                 buttonClassName="btn btn-danger text-white p-1 m-0 rounded-circle"
             />
 
-            <Modal
-                show={showModal}
-                onHide={handleCloseModal}
-                className="d-flex justify-content-center bd-dark"
-            >
-                <Modal.Header closeButton>
-                    Set your new profile picture
-                </Modal.Header>
-                <Modal.Body>
-                    <AvatarEditor
-                        image={fileLoaded}
-                        width={280}
-                        height={280}
-                        border={50}
-                        color={[0, 0, 0, 0.7]} // RGBA
-                        scale={1.2}
-                        rotate={1}
-                        borderRadius={140}
-                        ref={editor}
-                    />
-                </Modal.Body>
-                <ButtonWithIcon
-                    background="#90be6d"
-                    onClick={handleImageUpload}
-                >
-                    Update
-                </ButtonWithIcon>
-            </Modal>
+            <Suspense fallback={<div>Loading...</div>}>
+                <ImageUploadModal
+                    showModal={showModal}
+                    handleCloseModal={handleCloseModal}
+                    handleOpenModal={handleOpenModal}
+                    fileLoaded={fileLoaded}
+                    setImgPreview={setImgPreview}
+                />
+            </Suspense>
         </div>
     );
 }
