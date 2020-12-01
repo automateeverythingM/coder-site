@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/react";
 import { connect } from "react-redux";
 import Avatar from "./ProfileAvatar/Avatar";
+import ProfileInfo from "./BasicInfo/ProfileInfo";
 function ProfileAbout({ user, token }) {
     const [showEdit, setShowEdit] = useState("hidden");
     return (
@@ -19,11 +20,7 @@ function ProfileAbout({ user, token }) {
             `}
         >
             <Avatar />
-            <div>
-                <p>Aasdjasd</p>
-                <a href="#s">sda</a>
-            </div>
-
+            <ProfileInfo />
             <div className="w-100 d-flex justify-content-center"></div>
         </div>
     );

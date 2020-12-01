@@ -4,6 +4,7 @@ import { css, jsx } from "@emotion/react";
 import React from "react";
 import { connect } from "react-redux";
 import ProfileAbout from "./ProfileAbout/ProfileAbout";
+import ProfileTabs from "./ProfileTabs/ProfileTabs";
 
 function Profile({ user }) {
     console.log("Profile -> user", user);
@@ -25,7 +26,9 @@ function Profile({ user }) {
                     <div className="col-4 bg-dark text-white">
                         <ProfileAbout />
                     </div>
-                    <div className="col-8 bg-white text-dark"></div>
+                    <div className="col-8 bg-white text-dark">
+                        <ProfileTabs />
+                    </div>
                 </div>
             </div>
         </div>

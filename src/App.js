@@ -1,9 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
-import Home from "./components/Pages/Home";
-import Profile from "./components/Pages/Profile/Profile";
-import Notification from "react-notifications-component";
+
 import "./App.css";
 import "react-notifications-component/dist/theme.css";
 import "animate.css";
@@ -15,8 +13,12 @@ import {
 } from "./store/reducers/userReducer";
 import AuthRoute from "./components/PrivateRoute/AuthRoute";
 import RedirectRoute from "./components/PrivateRoute/RedirectRoute";
+import { Spinner } from "react-bootstrap";
 const Login = React.lazy(() => import("./components/SingUpLoginForm/Login"));
 const Signup = React.lazy(() => import("./components/SingUpLoginForm/Signup"));
+const Profile = React.lazy(() => import("./components/Pages/Profile/Profile"));
+const Home = React.lazy(() => import("./components/Pages/Home"));
+const Notification = React.lazy(() => import("react-notifications-component"));
 
 function App({ isUserAuthenticated, dispatch }) {
     const addListener = async () => {
@@ -45,12 +47,14 @@ function App({ isUserAuthenticated, dispatch }) {
 
     return (
         <Router>
-            <Notification />
+            <Suspense fallback={<span>Loading...</span>}>
+                <Notification />
+            </Suspense>
             <header>
                 <Navbar />
             </header>
             <main>
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<Spinner animation="border" />}>
                     <Switch>
                         <RedirectRoute
                             exact
