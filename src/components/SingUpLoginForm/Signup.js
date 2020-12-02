@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Alert, Container, Form, InputGroup, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { HiCheckCircle } from "react-icons/hi";
 
 /** @jsxRuntime classic */
 /** @jsx jsx */
@@ -38,8 +37,9 @@ function Signup({ serverFetchError }) {
     const [submitting, setSubmitting] = useState(false);
     const namesArray = ["marko", "nikola", "relja", "dusan", "djordje"];
 
-    const asyncCheckIn = asyncCallInProgress || usernameValidatePass;
-    const checkAsync = asyncCheckIn ? "rounded-right-0" : "rounded-right";
+    const checkAsync = asyncCallInProgress
+        ? "rounded-right-0"
+        : "rounded-right";
     const onSubmit = async (data) => {
         setSubmitting("register");
         dispatch(clearFetchError());
@@ -147,19 +147,17 @@ function Signup({ serverFetchError }) {
                             onChange={(e) =>
                                 uniqueUsernameCheck(e.target.value)
                             }
-                            isInvalid={errors.username && !asyncCallInProgress}
+                            isInvalid={!asyncCallInProgress && errors.username}
+                            isValid={usernameValidatePass}
                         />
-                        {asyncCheckIn && (
+                        {asyncCallInProgress && (
                             <InputGroup.Append className="d-flex align-items-center bg-white rounded-right px-2">
-                                {usernameValidatePass ? (
-                                    <HiCheckCircle color="green" />
-                                ) : (
-                                    <Spinner
-                                        animation="border"
-                                        role="status"
-                                        size="sm"
-                                        variant="dark"
-                                    />
+                                <Spinner
+                                    animation="border"
+                                    role="status"
+                                    size="sm"
+                                    variant="dark"
+                                />
                                 )}
                             </InputGroup.Append>
                         )}
