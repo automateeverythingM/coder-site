@@ -4,6 +4,7 @@ import React from "react";
 import { css, jsx } from "@emotion/react";
 import { Toast } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { deleteProject } from "../../../../../store/reducers/projectReducer";
 
 const paragraph = css`
     font-size: 0.8rem;
@@ -14,13 +15,16 @@ export default function ProjectCard({
     title,
     lookingFor,
     repoSrc,
+    id,
 }) {
+    const dispatch = useDispatch();
     return (
         <Toast
             css={css`
                 width: 48%;
             `}
             className="d-inline-block mr-2"
+            onClose={() => dispatch(deleteProject(id))}
         >
             <Toast.Header>
                 <div

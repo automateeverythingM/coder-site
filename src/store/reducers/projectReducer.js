@@ -2,9 +2,14 @@ import produce from "immer";
 import listOfProject from "../../components/mocks/ProjectCardMock";
 import { nanoid as id } from "nanoid";
 const ADD_PROJECT = "ADD_PROJECT";
+const DELETE_PROJECT = "DELETE_PROJECT";
 
 export const addProject = (project) => {
     return { type: ADD_PROJECT, payload: { project } };
+};
+
+export const deleteProject = (id) => {
+    return { type: DELETE_PROJECT, payload: { id } };
 };
 
 const initialState = {
@@ -19,11 +24,16 @@ const reducer = (state = initialState, action) => {
                     ...action.payload.project,
                     id: id(),
                 };
-                console.log(
-                    "🚀 ~ file: projectReducer.js ~ line 19 ~ returnproduce ~ projWithId",
-                    projWithId
-                );
                 draft.listOfProject.push(projWithId);
+                break;
+
+            case DELETE_PROJECT:
+                const index = draft.listOfProject.findIndex(
+                    (proj) => proj.id === action.payload.id
+                );
+
+                if (index !== -1) draft.listOfProject.splice(index, 1);
+
                 break;
 
             default:

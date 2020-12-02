@@ -102,6 +102,17 @@ export default function NewProjectModal({ showModal, handleCloseModal }) {
                         </InputGroup>
                     </Form.Group>
 
+                    <Form.Group>
+                        <Form.Label>Github repo link</Form.Label>
+                        <InputGroup>
+                            <Form.Control
+                                type="text"
+                                name="repoSrc"
+                                ref={register}
+                            />
+                        </InputGroup>
+                    </Form.Group>
+
                     <ButtonWithIcon type="submit" block>
                         Add new project
                     </ButtonWithIcon>
