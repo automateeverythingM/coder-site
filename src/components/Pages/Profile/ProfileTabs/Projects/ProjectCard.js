@@ -3,6 +3,7 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
 import { Toast } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
 const paragraph = css`
     font-size: 0.8rem;

@@ -1,9 +1,15 @@
 import React, { useEffect } from "react";
+/** @jsxRuntime classic */
+/** @jsx jsx */
+import { css, jsx } from "@emotion/react";
 import { Form, InputGroup, Modal } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import ButtonWithIcon from "../../../../UI/Buttons/ButtonWithIconAndLoader/ButtonWithIcon";
+import { useDispatch } from "react-redux";
+import { addProject } from "../../../../../store/reducers/projectReducer";
 export default function NewProjectModal({ showModal, handleCloseModal }) {
     const { register, handleSubmit, errors } = useForm();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         console.log(
@@ -12,10 +18,21 @@ export default function NewProjectModal({ showModal, handleCloseModal }) {
         );
     }, [errors]);
 
-    const onSubmit = (data) => {};
+    const onSubmit = (data) => {
+        dispatch(addProject(data));
+        handleCloseModal();
+    };
     return (
         <Modal show={showModal} onHide={handleCloseModal}>
-            <Modal.Header className="bg-dark text-light" closeButton>
+            <Modal.Header
+                css={css`
+                    & button.close {
+                        color: whitesmoke;
+                    }
+                `}
+                className="bg-dark text-light"
+                closeButton
+            >
                 New Project
             </Modal.Header>
             <Modal.Body className="bg-dark text-light">
@@ -31,10 +48,10 @@ export default function NewProjectModal({ showModal, handleCloseModal }) {
                                 type="text"
                                 isInvalid={errors.title && errors.title.message}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.title && errors.title.message}
+                            </Form.Control.Feedback>
                         </InputGroup>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.title && errors.title.message}
-                        </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Description</Form.Label>
@@ -54,13 +71,13 @@ export default function NewProjectModal({ showModal, handleCloseModal }) {
                                     errors.description &&
                                     errors.description.message
                                 }
-                                isValid={!errors.description}
                                 rows={4}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.description &&
+                                    errors.description.message}
+                            </Form.Control.Feedback>
                         </InputGroup>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.description && errors.description.message}
-                        </Form.Control.Feedback>
                     </Form.Group>
 
                     <Form.Group>
@@ -79,10 +96,10 @@ export default function NewProjectModal({ showModal, handleCloseModal }) {
                                     errors.lookingFor.message
                                 }
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.lookingFor && errors.lookingFor.message}
+                            </Form.Control.Feedback>
                         </InputGroup>
-                        <Form.Control.Feedback type="invalid">
-                            {errors.lookingFor && errors.lookingFor.message}
-                        </Form.Control.Feedback>
                     </Form.Group>
 
                     <ButtonWithIcon type="submit" block>

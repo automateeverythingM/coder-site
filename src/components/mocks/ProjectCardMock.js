@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 export default [
     {
+        id: "1",
         description:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem fugiat ipsam, quibusdam repudiandae non voluptatem unde sed dolore molestiae iusto nihil eveniet pariatur soluta. Rem nulla perferendis facere excepturi ducimus.",
         title: "adoptmeproject",
@@ -9,6 +10,7 @@ export default [
         repoSrc: "https://github.com/automateeverythingM/coder-site",
     },
     {
+        id: "2",
         description:
             "Sit, amet consectetur adipisicing elit. Exercitationem fugiat ipsam, quibusdam repudiandae non voluptatem unde sed dolore molestiae iusto nihil eveniet pariatur soluta. Rem nulla perferendis facere excepturi ducimus.",
         title: "slack-clone",
@@ -16,6 +18,7 @@ export default [
         repoSrc: "https://github.com/automateeverythingM/slack-clone",
     },
     {
+        id: "3",
         description:
             "Exercitationem fugiat ipsam, quibusdam repudiandae non voluptatem unde sed dolore molestiae iusto nihil eveniet pariatur soluta. Rem nulla perferendis facere excepturi ducimus.",
         title: "adoptmeproject",

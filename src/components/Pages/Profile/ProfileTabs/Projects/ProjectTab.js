@@ -9,7 +9,7 @@ import ProjectCards from "./ProjectCards";
 import NewProjectModal from "./NewProjectModal";
 
 function ProjectTab() {
-    const [showModal, setShowModal] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const handleNewProjectClick = () => {
         setShowModal(true);
     };
