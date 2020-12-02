@@ -27,7 +27,7 @@ export default function ProfileTabs() {
             <Tab eventKey="projects" title="Projects" className="p-4">
                 <ProjectTab />
             </Tab>
-            <Tab eventKey="messages" title="Messages" className="p-4">
+            <Tab eventKey="messages" title="Messages" className="py-4 pr-4">
                 <MessageList />
             </Tab>
         </Tabs>

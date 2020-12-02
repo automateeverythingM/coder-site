@@ -7,8 +7,6 @@ import ProfileAbout from "./ProfileAbout/ProfileAbout";
 import ProfileTabs from "./ProfileTabs/ProfileTabs";
 
 function Profile({ user }) {
-    console.log("Profile -> user", user);
-
     return (
         <div
             css={css`
@@ -38,7 +36,4 @@ function Profile({ user }) {
 const mapStateToProps = (state) => ({
     user: state.userReducer.currentUser,
 });
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps)(Profile);

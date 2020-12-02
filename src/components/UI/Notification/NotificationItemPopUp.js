@@ -46,10 +46,9 @@ export default function NotificationItemPopUp({
                 padding: 1rem;
                 background: whitesmoke;
                 cursor: pointer;
-                border: 1px solid #00000033;
                 margin-bottom: 0.25rem;
                 &:hover {
-                    background: #000000ee;
+                    background: #202122;
                     color: whitesmoke;
                 }
             `}
