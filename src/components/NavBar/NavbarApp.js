@@ -17,8 +17,8 @@ function NavbarApp({ isUserAuthenticated }) {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto md-m-0">
-                        <Nav.Link as={Link} to="/login">
-                            Login
+                        <Nav.Link as={Link} to="/profile">
+                            Profile
                         </Nav.Link>
                         <Nav.Link as={Link} to="#pricing"></Nav.Link>
                         <NavDropdown

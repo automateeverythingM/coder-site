@@ -34,6 +34,7 @@ export default function NotificationItemPopUp({
     linkColor = "yellow",
     alt = "",
     contentMsg = mockContent,
+    imgSize = "50px",
 }) {
     return (
         <div
@@ -43,14 +44,22 @@ export default function NotificationItemPopUp({
                 height: 100%;
                 align-items: center;
                 padding: 1rem;
-                border-radius: 0.5rem;
                 background: whitesmoke;
+                cursor: pointer;
+                border: 1px solid #00000033;
+                margin-bottom: 0.25rem;
+                &:hover {
+                    background: #000000ee;
+                    color: whitesmoke;
+                }
             `}
         >
             <img
                 css={css`
-                    max-width: 50px;
-                    max-height: 50px;
+                    max-width: ${imgSize};
+                    max-height: ${imgSize};
+                    width: ${imgSize};
+                    height: ${imgSize};
                 `}
                 src={imgSrc}
                 alt={alt}
