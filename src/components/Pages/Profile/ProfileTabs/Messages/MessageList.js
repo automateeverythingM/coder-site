@@ -1,6 +1,5 @@
 import React from "react";
 import NotificationItemPopUp from "../../../../UI/Notification/NotificationItemPopUp";
-import { Badge } from "react-bootstrap";
 import MessageCard from "./MessageCard";
 import dataMsgCards from "../../../../mocks/messageListWithPreview";
 export default function MessageList({ data = dataMsgCards }) {

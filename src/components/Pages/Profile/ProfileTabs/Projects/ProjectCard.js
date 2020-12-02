@@ -8,7 +8,12 @@ const paragraph = css`
     font-size: 0.8rem;
 `;
 
-export default function ProjectCard({ description, title }) {
+export default function ProjectCard({
+    description,
+    title,
+    lookingFor,
+    repoSrc,
+}) {
     return (
         <Toast
             css={css`
@@ -24,26 +29,14 @@ export default function ProjectCard({ description, title }) {
                     `}
                     className="bg-dark rounded mr-auto"
                 />
-                <span className="mr-auto">adoptmeproject</span>
+                <span className="mr-auto">{title}</span>
             </Toast.Header>
             <Toast.Body>
                 <h6>short description</h6>
-                <p css={paragraph}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Sint voluptatum non expedita illum assumenda. Cupiditate
-                    voluptate at reprehenderit vitae ipsum ratione nulla,
-                    tenetur non ullam! Accusamus facilis sequi labore
-                    voluptates.
-                </p>
-                <h6>You cant help me if you know...</h6>
-                <p css={paragraph}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Debitis placeat eum ea ipsa dolorum.
-                </p>
-                git repo:{" "}
-                <a href="https://github.com/automateEverything">
-                    https://github.com/automateEverything
-                </a>
+                <p css={paragraph}>{description}</p>
+                <h6>Im looking for </h6>
+                <p css={paragraph}>{lookingFor}</p>
+                git repo: <a href={repoSrc}>{repoSrc}</a>
             </Toast.Body>
         </Toast>
     );

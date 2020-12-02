@@ -3,6 +3,7 @@
 import { css, jsx } from "@emotion/react";
 import React, { useRef, useState } from "react";
 import { Alert, Container, Form } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
@@ -26,16 +27,16 @@ const form = css`
 `;
 
 function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
+    const { register, handleSubmit, errors } = useForm();
     const [submitting, setSubmitting] = useState(false);
     const history = useHistory();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const { email, password } = e.target;
-        setSubmitting(true);
+    const onSubmit = async (data) => {
+        const { email, password } = data;
+        setSubmitting("register");
         sleep(5000);
         const user = await auth
-            .signInWithEmailAndPassword(email.value, password.value)
+            .signInWithEmailAndPassword(email, password)
             .catch((error) => {
                 dispatch(setFetchError(error));
             });
@@ -50,22 +51,40 @@ function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
         <Container css={container}>
             <h1>Login</h1>
             <Form
-                onSubmit={handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 noValidate
                 css={form}
                 className="bg-dark text-white"
             >
                 <Form.Group>
                     <Form.Label>Username or email</Form.Label>
-                    <Form.Control placeholder="Enter username or email" />
+                    <Form.Control
+                        name="email"
+                        ref={register({
+                            required: "Please enter a valid email",
+                        })}
+                        placeholder="Enter username or email"
+                        isInvalid={errors.email && errors.email.message}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.email && errors.email.message}
+                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
+                        ref={register({
+                            required: "Please enter your password",
+                        })}
+                        name="password"
                         type="password"
                         placeholder="Enter Password"
+                        isInvalid={errors.password && errors.password.message}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.password && errors.password.message}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 {serverFetchError && (
                     <Alert className="text-center" variant="danger">

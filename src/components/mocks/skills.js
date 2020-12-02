@@ -1,3 +1,5 @@
+/* eslint-disable import/no-anonymous-default-export */
+
 export default [
     { id: 1, name: "Javascript" },
     { id: 2, name: "Angular" },

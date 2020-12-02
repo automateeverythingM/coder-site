@@ -34,7 +34,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
                 className="mt-3"
                 background="teal"
                 disabled={!!submitting}
-                loading={!!(submitting === "register")}
+                loading={submitting === "register" ? 1 : undefined}
                 onlySpinner
                 block
                 icon={FaGlobe}
@@ -46,7 +46,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
                 className="mt-3"
                 background="#24292E"
                 disabled={!!submitting}
-                loading={!!(submitting === "github")}
+                loading={submitting === "github" ? 1 : undefined}
                 onlySpinner
                 block
                 icon={ImGithub}
@@ -57,7 +57,7 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
             <ButtonWithIcon
                 className="mt-3"
                 disabled={!!submitting}
-                loading={!!(submitting === "google")}
+                loading={submitting === "google" ? 1 : undefined}
                 onlySpinner
                 block
                 icon={AiOutlineGoogle}

@@ -1,13 +1,12 @@
 import React from "react";
 import ProjectCard from "./ProjectCard";
-
-export default function ProjectCards() {
+import dataProjectCards from "../../../../mocks/ProjectCardMock";
+export default function ProjectCards({ data = dataProjectCards }) {
     return (
-        <div>
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-        </div>
+        <>
+            {data.map((project) => (
+                <ProjectCard {...project} />
+            ))}
+        </>
     );
 }
