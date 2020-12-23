@@ -12,6 +12,7 @@ export default function HeroRejected() {
                 <img
                     src={GroupOfPeopleTeamUp}
                     alt="group of people"
+                    className="animate__rotateIn"
                     css={css`
                         transition: transform 1.5s ease-in-out;
                         &:hover {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
@@ -18,13 +18,23 @@ export default function ProjectCard({
     id,
 }) {
     const dispatch = useDispatch();
+    const [animate, setAnimate] = useState(
+        "animate__animated animate__zoomIn animate__faster"
+    );
+
     return (
         <Toast
             css={css`
                 width: 48%;
             `}
-            className="d-inline-block mr-2"
-            onClose={() => dispatch(deleteProject(id))}
+            className={`d-inline-block mr-2 ${animate}`}
+            onClose={() => {
+                setAnimate("animate__animated animate__zoomOut");
+                dispatch(deleteProject(id));
+            }}
+            onAnimationEnd={() => {
+                setAnimate("");
+            }}
         >
             <Toast.Header>
                 <div
@@ -36,7 +46,11 @@ export default function ProjectCard({
                 />
                 <span className="mr-auto">{title}</span>
             </Toast.Header>
-            <Toast.Body>
+            <Toast.Body
+                css={css`
+                    word-break: break-word;
+                `}
+            >
                 <h6>short description</h6>
                 <p css={paragraph}>{description}</p>
                 <h6>Im looking for </h6>

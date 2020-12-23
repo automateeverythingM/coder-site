@@ -16,14 +16,14 @@ function AutoCompleteStyled({
 }) {
     //resetujemo state zbog key pa posle setujemo input
     //NOTE: trebalo bi da  napisem jedan metod za oba
-    function onClickHandler(e) {
-        handleClickLi(e.target.innerText);
-    }
+    // function onClickHandler(e) {
+    //     handleClickLi(e.target.innerText);
+    // }
 
     return (
         <UlDropdown
             position="absolute"
-            onClick={onClickHandler}
+            onClick={handleClickLi}
             onMouseLeave={() => setSelector(-1)}
         >
             {data.map((item, index) => (

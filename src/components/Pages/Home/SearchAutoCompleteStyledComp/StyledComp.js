@@ -127,7 +127,7 @@ export const CloseButton = styled(Button)`
     visibility: ${(props) => (props.show ? "visible" : "hidden")};
     color: red;
     padding: 0 0.5em;
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin-right: 0.5em;
     margin-bottom: 0;
     user-select: none;

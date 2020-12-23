@@ -265,7 +265,7 @@ export default function reducer(state = initialState, action) {
             //?autocompleteList
             case AUTOCOMPLETE_LIST_ITEM_CLICK:
                 draft.autocompleteList = [];
-                draft.inputValue = payload.value;
+                draft.inputValue = payload.value.target.innerText;
                 draft.inputRef.focus();
                 break;
 
