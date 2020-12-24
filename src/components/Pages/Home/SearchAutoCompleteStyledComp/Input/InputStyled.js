@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { GoSearch } from "react-icons/go";
+import { debounce } from "loadsh";
 import {
     addTag,
     popTag,
-    resetState,
     setAllInputs,
     setInputValue,
     moveSelector,
     assignInputRef,
     setAutocompleteList,
+    resetStateAndFocusInput,
 } from "../../../../../store/reducers/searchReducer";
 //
 import {
@@ -42,7 +43,16 @@ function InputStyled({
     useEffect(() => {
         inputRef.focus();
         dispatch(assignInputRef(inputRef));
-    }, [assignInputRef, inputRef]);
+    }, [dispatch, inputRef]);
+
+    const backspaceDelayDebounce = useMemo(
+        () =>
+            debounce(() => {
+                console.log("Set to true");
+                setBackspaceDelay(true);
+            }, 500),
+        []
+    );
 
     // set value and call call users handler
     const handleOnChangeInput = (event) => {
@@ -53,25 +63,28 @@ function InputStyled({
         autoSuggestionManager(value, suggestedWord, autoSuggestion, dispatch);
 
         if (value.trim()) handleOnChange(value);
-        setBackspaceDelay(false);
+
+        backspaceDelayDebounce();
+        if (backspaceDelay) {
+            setBackspaceDelay(false);
+        }
     };
 
     //clean input value
     const handleClearInput = (event) => {
         event.preventDefault();
-        dispatch(resetState());
+        dispatch(resetStateAndFocusInput());
     };
 
     const handleKeyDown = (event) => {
         const currentInputValue = event.target.value;
         const key = event.key;
 
+        //ako input nije prazan i postoji autosugestion custom Tab
         if (key === "Tab" && currentInputValue) {
             event.preventDefault();
             if (dropdownSelector > -1) return;
 
-            // if (dropdownSelector !== -1) return;
-            //ako ima vredonst setujemo je
             autoSuggestion && dispatch(setAllInputs(caseSensitiveFill));
         }
         //
@@ -105,17 +118,6 @@ function InputStyled({
         }
     };
 
-    function handleKeyUp(event) {
-        const currentInputValue = event.target.value;
-
-        if (event.key === "Backspace" && !currentInputValue) {
-            // NOTE: previse brzo brise tagove ako se zadrzi key, mozda neki timeout
-            setBackspaceDelay(true);
-        }
-    }
-
-    //
-
     return (
         <Wrapper>
             <SearchInputs showDropdown={showDropdown}>
@@ -126,7 +128,6 @@ function InputStyled({
                         value={inputValue}
                         onChange={handleOnChangeInput}
                         onKeyDown={handleKeyDown}
-                        onKeyUp={handleKeyUp}
                         zIndex="50"
                         ref={(input) => (inputRef = input)}
                     />

@@ -10,28 +10,22 @@ import { Li, UlDropdown } from "../StyledComp";
 function AutoCompleteStyled({
     autocompleteList: data,
     dropdownSelector,
-    setSelector,
-    handleClickLi,
-    handleMouseEnter,
+    dispatch,
 }) {
-    //resetujemo state zbog key pa posle setujemo input
-    //NOTE: trebalo bi da  napisem jedan metod za oba
-    // function onClickHandler(e) {
-    //     handleClickLi(e.target.innerText);
-    // }
-
     return (
         <UlDropdown
             position="absolute"
-            onClick={handleClickLi}
-            onMouseLeave={() => setSelector(-1)}
+            onClick={(e) => dispatch(autocompleteListItemClick(e))}
+            onMouseLeave={() => dispatch(setSelector(-1))}
         >
             {data.map((item, index) => (
                 <Li
                     selected={index === dropdownSelector}
                     key={item.code}
                     data-id={index}
-                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseEnter={() =>
+                        dispatch(autocompleteListMouseEnter(index))
+                    }
                 >
                     {item.name}
                 </Li>
@@ -44,11 +38,4 @@ const mapStateToProps = ({ searchReducer }) => ({
     dropdownSelector: searchReducer.dropdownSelector,
     autocompleteList: searchReducer.autocompleteList,
 });
-
-const mapDispatchToProps = (dispatch) => ({
-    setSelector: (index) => dispatch(setSelector(index)),
-    handleClickLi: (value) => dispatch(autocompleteListItemClick(value)),
-    handleMouseEnter: (value) => dispatch(autocompleteListMouseEnter(value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AutoCompleteStyled);
+export default connect(mapStateToProps)(AutoCompleteStyled);

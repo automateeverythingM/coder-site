@@ -25,7 +25,8 @@ const SET_SELECT_FILTER = "SET_SELECT_FILTERS";
 const TOGGLE_FILTER_LIST = "TOGGLE_FILTER_LIST";
 const FOCUS_INPUT = "FOCUS_INPUT";
 const ASSIGN_INPUT_REF = "ASSIGN_INPUT_REF";
-
+const RESET_STATE_AND_FOCUS_INPUT = "RESET_STATE_AND_FOCUS_INPUT";
+const ON_BLUR_HIDE_FILTER_LIST = "ON_BLUR_HIDE_FILTER_LIST";
 //input
 
 const SET_AUTOSUGGESTION_AND_CASE_SENSITIVE =
@@ -39,43 +40,43 @@ const AUTOCOMPLETE_LIST_MOUSE_ENTER = "AUTOCOMPLETE_LIST_MOUSE_ENTER";
 //!ACTIONS
 
 export function deleteTag(id) {
-    return { type: DELETE_TAG, payload: { id } };
+    return { type: DELETE_TAG, payload: id };
 }
 
 export function popTag() {
-    return { type: POP_TAG, payload: {} };
+    return { type: POP_TAG };
 }
 
 export function addTag(tagName) {
-    return { type: ADD_TAG, payload: { tagName } };
+    return { type: ADD_TAG, payload: tagName };
 }
 
 export function setSelectFilter(value) {
-    return { type: SET_SELECT_FILTER, payload: { value } };
+    return { type: SET_SELECT_FILTER, payload: value };
 }
 
 export function moveSelector(key) {
-    return { type: MOVE_SELECTOR, payload: { key } };
+    return { type: MOVE_SELECTOR, payload: key };
 }
 
 export function setSelector(index) {
-    return { type: SET_SELECTOR, payload: { index } };
+    return { type: SET_SELECTOR, payload: index };
 }
 
 export function setInputValue(value) {
-    return { type: SET_INPUT_VALUE, payload: { value } };
+    return { type: SET_INPUT_VALUE, payload: value };
 }
 
 export function focusInput() {
-    return { type: FOCUS_INPUT, payload: {} };
+    return { type: FOCUS_INPUT };
 }
 
 export function assignInputRef(value) {
-    return { type: ASSIGN_INPUT_REF, payload: { value } };
+    return { type: ASSIGN_INPUT_REF, payload: value };
 }
 
 export function setAutoSuggestion(value) {
-    return { type: SET_AUTO_SUGGESTION, payload: { value } };
+    return { type: SET_AUTO_SUGGESTION, payload: value };
 }
 
 export function setAutoSuggestionAndCaseSensitive(appendedValue, value) {
@@ -86,27 +87,33 @@ export function setAutoSuggestionAndCaseSensitive(appendedValue, value) {
 }
 
 export function setAllInputs(value) {
-    return { type: SET_ALL_INPUTS, payload: { value } };
+    return { type: SET_ALL_INPUTS, payload: value };
+}
+export function onBlurHideFilterList() {
+    return { type: ON_BLUR_HIDE_FILTER_LIST };
 }
 
 export function clearAllInputs() {
-    return { type: CLEAR_INPUT, payload: {} };
+    return { type: CLEAR_INPUT };
 }
 
 export function setAutocompleteList(value) {
-    return { type: SET_AUTOCOMPLETE_LIST, payload: { value } };
+    return { type: SET_AUTOCOMPLETE_LIST, payload: value };
 }
 
 export function clearAutocompleteList() {
-    return { type: CLEAR_AUTOCOMPLETE_LIST, payload: {} };
+    return { type: CLEAR_AUTOCOMPLETE_LIST };
 }
 
 export function resetState() {
-    return { type: RESET_STATE, payload: {} };
+    return { type: RESET_STATE };
+}
+export function resetStateAndFocusInput() {
+    return { type: RESET_STATE };
 }
 
 export function fetchAutoCompleteList(value) {
-    return { type: FETCH_AUTOCOMPLETE_LIST, payload: { value } };
+    return { type: FETCH_AUTOCOMPLETE_LIST, payload: value };
 }
 
 export function setCaseSensitiveSuggestion(appendedValue, value) {
@@ -117,11 +124,11 @@ export function setCaseSensitiveSuggestion(appendedValue, value) {
 }
 
 export function setTempInputValue(value) {
-    return { type: SET_TEMP_INPUT_VALUE, payload: { value } };
+    return { type: SET_TEMP_INPUT_VALUE, payload: value };
 }
 
 export function toggleFilterList() {
-    return { type: TOGGLE_FILTER_LIST, payload: {} };
+    return { type: TOGGLE_FILTER_LIST };
 }
 
 //? Autocomplete actions
@@ -129,14 +136,14 @@ export function toggleFilterList() {
 export function autocompleteListItemClick(value) {
     return {
         type: AUTOCOMPLETE_LIST_ITEM_CLICK,
-        payload: { value },
+        payload: value,
     };
 }
 
 export function autocompleteListMouseEnter(value) {
     return {
         type: AUTOCOMPLETE_LIST_MOUSE_ENTER,
-        payload: { value },
+        payload: value,
     };
 }
 
@@ -173,27 +180,23 @@ export default function reducer(state = initialState, action) {
     return produce(state, (draft) => {
         switch (type) {
             case ADD_TAG:
-                const { tagName } = payload;
-                manageTagList(tagName, draft.tagList);
+                manageTagList(payload, draft.tagList);
                 cpxStateResetState(draft);
                 break;
             case DELETE_TAG:
-                const { id } = payload;
-                onDeleteHandler(draft.tagList, id);
+                onDeleteHandler(draft.tagList, payload);
                 break;
             case POP_TAG:
                 draft.tagList.pop();
                 break;
             case MOVE_SELECTOR:
-                const { key } = payload;
-                menageSelector(draft, key);
+                menageSelector(draft, payload);
                 break;
             case SET_SELECTOR:
-                const { index } = payload;
-                draft.dropdownSelector = index;
+                draft.dropdownSelector = payload;
                 break;
             case SET_AUTO_SUGGESTION:
-                draft.autoSuggestion = payload.value;
+                draft.autoSuggestion = payload;
                 break;
 
             case SET_AUTOSUGGESTION_AND_CASE_SENSITIVE:
@@ -201,7 +204,7 @@ export default function reducer(state = initialState, action) {
                 draft.caseSensitiveFillSuggestion = payload.value;
                 break;
             case SET_AUTOCOMPLETE_LIST:
-                draft.autocompleteList = payload.value;
+                draft.autocompleteList = payload;
                 draft.dropdownSelector = -1;
                 draft.tempInputValue = "";
                 break;
@@ -209,14 +212,18 @@ export default function reducer(state = initialState, action) {
                 draft.autocompleteList = [];
                 break;
             case SET_INPUT_VALUE:
-                draft.inputValue = payload.value;
+                draft.inputValue = payload;
                 break;
             case RESET_STATE:
                 cpxStateResetState(draft);
                 break;
+            case RESET_STATE_AND_FOCUS_INPUT:
+                cpxStateResetState(draft);
+                draft.inputRef.focus();
+                break;
             case SET_ALL_INPUTS:
-                draft.autoSuggestion = payload.value;
-                draft.inputValue = payload.value;
+                draft.autoSuggestion = payload;
+                draft.inputValue = payload;
                 break;
             case CLEAR_INPUT:
                 draft.autoSuggestion = "";
@@ -228,7 +235,7 @@ export default function reducer(state = initialState, action) {
 
             case SET_SELECT_FILTER:
                 const foundedSelected = draft.selectFilterList.find(
-                    (item) => item.id === +payload.value
+                    (item) => item.id === +payload
                 );
                 if (foundedSelected) {
                     draft.selectFilterList.map((item) => {
@@ -244,7 +251,7 @@ export default function reducer(state = initialState, action) {
                 break;
 
             case SET_CASE_SENSITIVE_SUGGESTION:
-                draft.caseSensitiveFillSuggestion = payload.value;
+                draft.caseSensitiveFillSuggestion = payload;
                 break;
 
             case SET_TEMP_INPUT_VALUE:
@@ -255,24 +262,29 @@ export default function reducer(state = initialState, action) {
                 draft.showFilterList = !draft.showFilterList;
                 break;
 
+            case ON_BLUR_HIDE_FILTER_LIST:
+                draft.showFilterList = false;
+                break;
+
             case FOCUS_INPUT:
                 draft.inputRef.focus();
                 break;
 
             case ASSIGN_INPUT_REF:
-                draft.inputRef = payload.value;
+                draft.inputRef = payload;
                 break;
             //?autocompleteList
             case AUTOCOMPLETE_LIST_ITEM_CLICK:
                 draft.autocompleteList = [];
-                draft.inputValue = payload.value.target.innerText;
+                console.log(payload);
+                draft.inputValue = payload.target.innerText;
                 draft.inputRef.focus();
                 break;
 
             case AUTOCOMPLETE_LIST_MOUSE_ENTER:
                 draft.tempInputValue = draft.inputValue;
                 draft.autoSuggestion = "";
-                draft.dropdownSelector = payload.value;
+                draft.dropdownSelector = payload;
                 break;
             default:
                 break;

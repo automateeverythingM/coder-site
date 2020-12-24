@@ -7,14 +7,14 @@ export function* loadAutoCompleteList() {
 }
 
 function* getAutoCompleteList(action) {
-    const {
-        payload: { value },
-    } = action;
+    const { payload } = action;
     let finished = yield axios
         .get("https://api.npoint.io/b12a6e7e85e8e63d54a2")
         .then(({ data }) => {
             return data.filter((item) => {
-                return item.name.toLowerCase().startsWith(value.toLowerCase());
+                return item.name
+                    .toLowerCase()
+                    .startsWith(payload.toLowerCase());
             });
         });
     yield (finished = finished.slice(0, 10));
