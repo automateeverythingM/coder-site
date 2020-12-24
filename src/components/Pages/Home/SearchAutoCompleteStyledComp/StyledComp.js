@@ -58,7 +58,7 @@ export const SearchButton = styled.button`
     padding: 0;
     border-radius: 0 0.6em 0.6em 0;
 
-    transition: all 0.15s ease-in-out;
+    transition: all 0.1s ease-in-out;
 
     &:hover {
         background: #999;
