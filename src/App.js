@@ -14,6 +14,7 @@ import {
 import AuthRoute from "./components/PrivateRoute/AuthRoute";
 import RedirectRoute from "./components/PrivateRoute/RedirectRoute";
 import { Spinner } from "react-bootstrap";
+import RetrieveForgottenPassword from "./components/SingUpLoginForm/RetrieveForgottenPassword";
 const Login = React.lazy(() => import("./components/SingUpLoginForm/Login"));
 const Signup = React.lazy(() => import("./components/SingUpLoginForm/Signup"));
 const Profile = React.lazy(() => import("./components/Pages/Profile/Profile"));
@@ -72,6 +73,11 @@ function App({ isUserAuthenticated, dispatch }) {
                         />
                         <AuthRoute exact path="/profile" component={Profile} />
                         <Route exact path="/" component={Home} />
+                        <Route
+                            exact
+                            path="/resetpassword"
+                            component={RetrieveForgottenPassword}
+                        />
                     </Switch>
                 </Suspense>
             </main>

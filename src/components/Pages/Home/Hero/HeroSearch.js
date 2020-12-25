@@ -1,6 +1,6 @@
 import React from "react";
 import { Jumbotron } from "react-bootstrap";
-import Search from "../SearchAutoCompleteStyledComp/SearchAppHolder";
+import Search from "../SearchAutoCompleteStyledComp/SearchAutoTags";
 import classes from "./herostyle.module.css";
 export const options = [
     { key: "all", text: "All", value: "all" },

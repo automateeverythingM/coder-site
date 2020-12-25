@@ -23,10 +23,10 @@ const SET_CASE_SENSITIVE_SUGGESTION = "FETCH_AUTOSUGGEST";
 const SET_TEMP_INPUT_VALUE = "SET_TEMP_INPUT_VALUE";
 const SET_SELECT_FILTER = "SET_SELECT_FILTERS";
 const TOGGLE_FILTER_LIST = "TOGGLE_FILTER_LIST";
-const FOCUS_INPUT = "FOCUS_INPUT";
 const ASSIGN_INPUT_REF = "ASSIGN_INPUT_REF";
 const RESET_STATE_AND_FOCUS_INPUT = "RESET_STATE_AND_FOCUS_INPUT";
 const ON_BLUR_HIDE_FILTER_LIST = "ON_BLUR_HIDE_FILTER_LIST";
+const ON_SUBMIT_MAIN_SEARCH = "ON_SUBMIT_MAIN_SEARCH";
 //input
 
 const SET_AUTOSUGGESTION_AND_CASE_SENSITIVE =
@@ -67,10 +67,6 @@ export function setInputValue(value) {
     return { type: SET_INPUT_VALUE, payload: value };
 }
 
-export function focusInput() {
-    return { type: FOCUS_INPUT };
-}
-
 export function assignInputRef(value) {
     return { type: ASSIGN_INPUT_REF, payload: value };
 }
@@ -89,6 +85,7 @@ export function setAutoSuggestionAndCaseSensitive(appendedValue, value) {
 export function setAllInputs(value) {
     return { type: SET_ALL_INPUTS, payload: value };
 }
+
 export function onBlurHideFilterList() {
     return { type: ON_BLUR_HIDE_FILTER_LIST };
 }
@@ -105,22 +102,12 @@ export function clearAutocompleteList() {
     return { type: CLEAR_AUTOCOMPLETE_LIST };
 }
 
-export function resetState() {
-    return { type: RESET_STATE };
-}
 export function resetStateAndFocusInput() {
-    return { type: RESET_STATE };
+    return { type: RESET_STATE_AND_FOCUS_INPUT };
 }
 
 export function fetchAutoCompleteList(value) {
     return { type: FETCH_AUTOCOMPLETE_LIST, payload: value };
-}
-
-export function setCaseSensitiveSuggestion(appendedValue, value) {
-    return {
-        type: SET_CASE_SENSITIVE_SUGGESTION,
-        payload: { appendedValue, value },
-    };
 }
 
 export function setTempInputValue(value) {
@@ -147,6 +134,11 @@ export function autocompleteListMouseEnter(value) {
     };
 }
 
+export function onSubmitMainSearch() {
+    return {
+        type: ON_SUBMIT_MAIN_SEARCH,
+    };
+}
 //! ****************************************************************//
 //! INITIAL STATE
 const initialState = {
@@ -214,10 +206,8 @@ export default function reducer(state = initialState, action) {
             case SET_INPUT_VALUE:
                 draft.inputValue = payload;
                 break;
-            case RESET_STATE:
-                cpxStateResetState(draft);
-                break;
             case RESET_STATE_AND_FOCUS_INPUT:
+                console.log("Heyt");
                 cpxStateResetState(draft);
                 draft.inputRef.focus();
                 break;
@@ -266,17 +256,12 @@ export default function reducer(state = initialState, action) {
                 draft.showFilterList = false;
                 break;
 
-            case FOCUS_INPUT:
-                draft.inputRef.focus();
-                break;
-
             case ASSIGN_INPUT_REF:
                 draft.inputRef = payload;
                 break;
             //?autocompleteList
             case AUTOCOMPLETE_LIST_ITEM_CLICK:
                 draft.autocompleteList = [];
-                console.log(payload);
                 draft.inputValue = payload.target.innerText;
                 draft.inputRef.focus();
                 break;
@@ -285,6 +270,14 @@ export default function reducer(state = initialState, action) {
                 draft.tempInputValue = draft.inputValue;
                 draft.autoSuggestion = "";
                 draft.dropdownSelector = payload;
+                break;
+
+            case ON_SUBMIT_MAIN_SEARCH:
+                const obj = {
+                    searchTerm: draft.inputValue,
+                    searchBy: draft.selectedFilter,
+                    filters: draft.tagList,
+                };
                 break;
             default:
                 break;

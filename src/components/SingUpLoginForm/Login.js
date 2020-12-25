@@ -1,14 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Alert, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
 import { setFetchError } from "../../store/reducers/fetchError";
-import { loginUser, setCurrentUser } from "../../store/reducers/userReducer";
+import { setCurrentUser } from "../../store/reducers/userReducer";
 import LoginSignupButtons from "./LoginSignupButtons";
 import sleep from "./sleep";
 
@@ -26,7 +26,7 @@ const form = css`
     width: 60%;
 `;
 
-function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
+const Login = ({ serverFetchError, dispatch }) => {
     const { register, handleSubmit, errors } = useForm();
     const [submitting, setSubmitting] = useState(false);
     const history = useHistory();
@@ -35,16 +35,18 @@ function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
         const { email, password } = data;
         setSubmitting("register");
         sleep(5000);
-        const user = await auth
-            .signInWithEmailAndPassword(email, password)
-            .catch((error) => {
-                dispatch(setFetchError(error));
-            });
+        try {
+            const user = await auth
+                .signInWithEmailAndPassword(email, password)
+                .catch((error) => {
+                    dispatch(setFetchError(error));
+                });
 
-        setCurrentUser(user);
-
-        setSubmitting(false);
-        if (user) history.push("/");
+            setCurrentUser(user);
+            if (user) history.push("/");
+        } catch (error) {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -57,13 +59,13 @@ function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
                 className="bg-dark text-white"
             >
                 <Form.Group>
-                    <Form.Label>Username or email</Form.Label>
+                    <Form.Label>Email</Form.Label>
                     <Form.Control
                         name="email"
                         ref={register({
                             required: "Please enter a valid email",
                         })}
-                        placeholder="Enter username or email"
+                        placeholder="Enter email"
                         isInvalid={errors.email && errors.email.message}
                     />
                     <Form.Control.Feedback type="invalid">
@@ -86,12 +88,19 @@ function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
                         {errors.password && errors.password.message}
                     </Form.Control.Feedback>
                 </Form.Group>
+
                 {serverFetchError && (
                     <Alert className="text-center" variant="danger">
                         {serverFetchError.message}
                     </Alert>
                 )}
 
+                <Link
+                    className="text-warning font-weight-bold"
+                    to="/resetpassword"
+                >
+                    Forgot your password?
+                </Link>
                 <LoginSignupButtons
                     submitting={submitting}
                     setSubmitting={setSubmitting}
@@ -101,14 +110,14 @@ function Login({ serverFetchError, isUserAuthenticated, dispatch }) {
                     Don`t have account?{" "}
                     <b>
                         <Link className="text-warning" to="/signup">
-                            SignUp
+                            Sign up
                         </Link>
                     </b>
                 </div>
             </Form>
         </Container>
     );
-}
+};
 
 const mapStateToProps = (state) => {
     return {

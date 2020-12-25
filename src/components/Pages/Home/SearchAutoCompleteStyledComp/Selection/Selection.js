@@ -3,32 +3,33 @@ import { Select, SelectLi, SelectWrapper, UlSelect } from "../StyledComp";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { connect } from "react-redux";
 import {
+    onBlurHideFilterList,
     setSelectFilter,
     toggleFilterList,
 } from "../../../../../store/reducers/searchReducer";
-function Selection({
-    data,
-    selected,
-    setSelected,
-    toggleFilterList,
-    showList,
-}) {
+function Selection({ data, selected, dispatch, showList }) {
     function clickHandler(e) {
         const id = e?.target?.dataset?.id;
         if (!id || selected.id === id) return;
-        setSelected(e.target.dataset.id);
+        dispatch(setSelectFilter(e.target.dataset.id));
     }
 
     return (
         <SelectWrapper>
-            <Select onClick={() => toggleFilterList()}>
+            <Select
+                onClick={() => dispatch(toggleFilterList())}
+                onBlur={() => {
+                    dispatch(onBlurHideFilterList());
+                }}
+                tabIndex="0"
+            >
                 <div style={{ fontSize: "inherit" }}>{selected.name}</div>
                 <RiArrowDropDownLine />
             </Select>
             <UlSelect
                 show={showList}
                 position="absolute"
-                onClick={clickHandler}
+                onMouseDown={clickHandler}
             >
                 {data.map((item) => {
                     return (
@@ -54,11 +55,4 @@ const mapStateToProps = ({ searchReducer }) => {
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setSelected: (value) => dispatch(setSelectFilter(value)),
-        toggleFilterList: () => dispatch(toggleFilterList()),
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Selection);
+export default connect(mapStateToProps)(Selection);

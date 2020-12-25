@@ -71,7 +71,6 @@ export const SearchButton = styled.button`
     }
 
     &:focus {
-        outline: none;
     }
 
     ${(props) =>
@@ -157,14 +156,18 @@ export const Ul = styled.ul`
     width: 100%;
 `;
 export const UlSelect = styled(Ul)`
-    opacity: 0;
     border-left: 3px solid transparent;
     z-index: 1010;
+    display: none;
+
+    &:focus {
+        border: 1px solid red;
+    }
 
     ${(props) =>
         props.show &&
         css`
-            opacity: 1;
+            display: block;
         `}
 `;
 
@@ -246,54 +249,6 @@ export const HrWrapper = styled.div`
     background: whitesmoke;
     display: flex;
     justify-content: center;
-`;
-
-//! TAGS
-
-//!
-/* ${(props) =>
-        props.selected &&
-        css`
-            background-color: transparent;
-            ${"" /* border: 1px solid #131518; }
-            box-shadow: 1px 0 3px  #999;
-            color: #131518;
-        `} */
-
-/* ${(props) =>
-        props.selected &&
-        css`
-            &:hover {
-                box-shadow: ${(props) =>
-                    `0px 0px 2px 1px ${darken(0.2, props.backgroundColor)}`};
-                    
-        
-            &:active {
-                box-shadow: ${(props) =>
-                    `0px 0px 2px 2px ${darken(0.1, props.backgroundColor)}`};
-                background-color: ${(props) =>
-                    darken(0.1, props.backgroundColor)};
-            }
-        `} */
-//!
-
-export const Jumbotron = styled.div`
-    position: relative;
-    width: 80%;
-    border-radius: 1em;
-    padding: 2em;
-    background: ${dark};
-    font-size: 12px;
-
-    @media (min-width: 768px) {
-        font-size: 16px;
-    }
-    @media (min-width: 992px) {
-        font-size: 18px;
-    }
-    @media (min-width: 1200px) {
-        font-size: 20px;
-    }
 `;
 
 export const TitleMsg = styled.h1`

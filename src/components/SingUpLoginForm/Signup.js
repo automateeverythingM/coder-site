@@ -19,6 +19,7 @@ import {
 import md5 from "md5";
 import LoginSignup from "./LoginSignupButtons";
 import { css, jsx } from "@emotion/react";
+import { debounce } from "loadsh";
 
 function Signup({ serverFetchError }) {
     const {
@@ -58,6 +59,7 @@ function Signup({ serverFetchError }) {
             if (userRef) history.push("/");
         } catch (error) {
             dispatch(setFetchError(error));
+            setSubmitting(false);
         }
     };
 
@@ -78,13 +80,14 @@ function Signup({ serverFetchError }) {
         });
     };
 
-    const uniqueUsernameCheck = async (name) => {
+    const uniqueUsernameCheck = debounce(async (name) => {
+        clearErrors("username");
         setUsernameValidatePass(false);
 
-        clearErrors(["username"]);
         if (name.length < 5) return;
         setAsyncCallInProgress(true);
         const isUserUnique = !namesArray.includes(name);
+
         await sleep(1000);
         setAsyncCallInProgress(false);
         setUsernameValidatePass(isUserUnique);
@@ -95,7 +98,7 @@ function Signup({ serverFetchError }) {
             });
 
         return isUserUnique;
-    };
+    }, 300);
 
     return (
         <Container
@@ -149,6 +152,7 @@ function Signup({ serverFetchError }) {
                             }
                             isInvalid={!asyncCallInProgress && errors.username}
                             isValid={usernameValidatePass}
+                            autoComplete="off"
                         />
                         {asyncCallInProgress && (
                             <InputGroup.Append className="d-flex align-items-center bg-white rounded-right px-2">
@@ -181,6 +185,7 @@ function Signup({ serverFetchError }) {
                         type="email"
                         placeholder="Enter email"
                         isInvalid={errors.email && errors.email.message}
+                        autoComplete="off"
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.email && errors.email.message}

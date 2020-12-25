@@ -34,10 +34,13 @@ export default function index() {
                         type: "info",
                         insert: "bottom",
                         container: "top-right",
-                        animationIn: ["animate__animated", "animate__flipInX"],
+                        animationIn: [
+                            "animate__animated",
+                            "animate__fadeInDown",
+                        ],
                         animationOut: [
                             "animate__animated",
-                            "animate__slideOutRight",
+                            "animate__fadeOutUp",
                         ],
                         dismiss: {
                             duration: 3000,
@@ -53,9 +56,9 @@ export default function index() {
                             console.log("index -> removedBy", removedBy);
                             console.log("index -> id", id);
                         },
-                        content: (
-                            <NotificationItemPopUp imgSrc="https://picsum.photos/50" />
-                        ),
+                        // content: (
+                        //     <NotificationItemPopUp imgSrc="https://picsum.photos/50" />
+                        // ),
                     });
                 }}
                 css={button}
