@@ -15,8 +15,7 @@ function SearchACSC({
     getAutoCompleteList,
     emptyAutoCompleteList,
 }) {
-    //Proveravamo da li je lista prazna
-    const showDropdown = !!autocompleteList.length && !!inputLength;
+    const showDropdown = !!autocompleteList.length && !!inputLength; //Proveravamo da li je lista prazna
 
     //Trazimo odgovarajucu rec za dopunu
     //NOTE: treba napraviti dobru logiku i snimati najcesce koriscene reci

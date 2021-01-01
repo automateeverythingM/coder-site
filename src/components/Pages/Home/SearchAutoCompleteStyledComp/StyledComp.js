@@ -32,7 +32,7 @@ export const Wrapper = styled.div`
 
 export const SearchInputs = styled.div`
     display: flex;
-    width: 70%;
+    width: 60%;
     align-items: center;
     border-radius: 0.6em 0 0 0.6em;
     background-color: ${(props) => props.backgroundColor || "whitesmoke"};
@@ -50,7 +50,7 @@ export const SearchButton = styled.button`
     outline: none;
     border: none;
     height: 100%;
-    width: 15%;
+    width: 20%;
     background: #bbb;
     color: inherit;
     border-left: 3px solid transparent;
@@ -299,7 +299,7 @@ export const Select = styled.div`
 export const SelectWrapper = styled.div`
     position: relative;
     height: 100%;
-    width: 15%;
+    width: 20%;
 `;
 
 export const SelectLi = styled.li`

@@ -8,20 +8,34 @@ import ButtonWithIcon from "../../../../UI/Buttons/ButtonWithIconAndLoader/Butto
 import { useDispatch } from "react-redux";
 import { addProject } from "../../../../../store/reducers/projectReducer";
 export default function NewProjectModal({ showModal, handleCloseModal }) {
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors, getValues, setValue } = useForm();
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        console.log(
-            "🚀 ~ file: NewProjectModal.js ~ line 9 ~ NewProjectModal ~ errors",
-            errors
-        );
-    }, [errors]);
 
     const onSubmit = (data) => {
         dispatch(addProject(data));
         handleCloseModal();
     };
+
+    const handleFetchGitHub = async (e) => {
+        e.preventDefault();
+
+        const githubRepo = getValues("repoSrc");
+        let spliced = githubRepo.split("/");
+        const url = `https://api.github.com/repos/${
+            spliced[spliced.length - 2]
+        }/${spliced[spliced.length - 1]}`;
+
+        let response = await fetch(url);
+        let readmeResponse = await fetch(url + "/readme");
+        readmeResponse = await readmeResponse.json();
+
+        const jsonResponse = await response.json();
+        setValue("description", jsonResponse.description);
+        setValue("title", jsonResponse.name);
+        // let decoded = atob(readmeResponse.content);
+        // setValue("lookingFor", decoded);
+    };
+
     return (
         <Modal show={showModal} onHide={handleCloseModal}>
             <Modal.Header
@@ -37,6 +51,19 @@ export default function NewProjectModal({ showModal, handleCloseModal }) {
             </Modal.Header>
             <Modal.Body className="bg-dark text-light">
                 <Form noValidate onSubmit={handleSubmit(onSubmit)}>
+                    <Form.Group>
+                        <Form.Label>Github repo link</Form.Label>
+                        <InputGroup>
+                            <Form.Control
+                                type="text"
+                                name="repoSrc"
+                                ref={register}
+                            />
+                        </InputGroup>
+                        <ButtonWithIcon onClick={handleFetchGitHub}>
+                            Load description from GitHub
+                        </ButtonWithIcon>
+                    </Form.Group>
                     <Form.Group>
                         <Form.Label>Project Name</Form.Label>
                         <InputGroup>
@@ -99,17 +126,6 @@ export default function NewProjectModal({ showModal, handleCloseModal }) {
                             <Form.Control.Feedback type="invalid">
                                 {errors.lookingFor && errors.lookingFor.message}
                             </Form.Control.Feedback>
-                        </InputGroup>
-                    </Form.Group>
-
-                    <Form.Group>
-                        <Form.Label>Github repo link</Form.Label>
-                        <InputGroup>
-                            <Form.Control
-                                type="text"
-                                name="repoSrc"
-                                ref={register}
-                            />
                         </InputGroup>
                     </Form.Group>
 

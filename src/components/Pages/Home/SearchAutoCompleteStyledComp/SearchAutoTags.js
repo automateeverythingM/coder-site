@@ -15,6 +15,10 @@ export default function SearchAutoTags() {
         <form
             onSubmit={(e) => {
                 e.preventDefault();
+                console.log(
+                    "🚀 ~ file: SearchAutoTags.js ~ line 28 ~ SearchAutoTags ~ data",
+                    data
+                );
             }}
             className="text-dark w-75 mx-auto"
         >
