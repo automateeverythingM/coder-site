@@ -8,6 +8,7 @@ import HeroSearch from "./Hero/HeroSearch";
 import { store } from "react-notifications-component";
 import "animate.css/animate.compat.css";
 import { nanoid } from "nanoid";
+import sleep from "../../SingUpLoginForm/sleep";
 const style = css`
     position: relative;
 `;

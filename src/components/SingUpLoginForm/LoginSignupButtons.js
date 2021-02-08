@@ -19,9 +19,11 @@ export default function LoginSignup({ submitting, setSubmitting, isSignup }) {
         await getUserWithProvider(githubProvider, dispatch, setFetchError);
         setSubmitting(false);
     };
+
     const { google, github } = isSignup
         ? { google: "Sign up with Google", github: "Sign up with Github" }
         : { google: "Login with Google", github: "Login with Github" };
+
     const signupWithGoogle = async () => {
         setSubmitting("google");
         dispatch(clearFetchError());

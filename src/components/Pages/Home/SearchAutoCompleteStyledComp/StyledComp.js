@@ -71,6 +71,7 @@ export const SearchButton = styled.button`
     }
 
     &:focus {
+        outline: none;
     }
 
     ${(props) =>

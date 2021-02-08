@@ -1,7 +1,6 @@
 import React from "react";
 import { Jumbotron } from "react-bootstrap";
 import Search from "../SearchAutoCompleteStyledComp/SearchAutoTags";
-import classes from "./herostyle.module.css";
 import img from "../../../../img/reworkWatermelon.svg";
 /** @jsxRuntime classic */
 /** @jsx jsx */

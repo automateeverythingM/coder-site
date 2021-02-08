@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/NavBar";
-
+import { FiMail } from "react-icons/fi";
 import "./App.css";
 import "react-notifications-component/dist/theme.css";
 import "animate.css";
@@ -13,8 +13,11 @@ import {
 } from "./store/reducers/userReducer";
 import AuthRoute from "./components/PrivateRoute/AuthRoute";
 import RedirectRoute from "./components/PrivateRoute/RedirectRoute";
-import { Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
+import { ReactComponent as loader } from "../src/img/loader.svg";
 import RetrieveForgottenPassword from "./components/SingUpLoginForm/RetrieveForgottenPassword";
+import SVG from "./components/UI/SVG/SVG";
+import sleep from "./components/SingUpLoginForm/sleep";
 const Login = React.lazy(() => import("./components/SingUpLoginForm/Login"));
 const Signup = React.lazy(() => import("./components/SingUpLoginForm/Signup"));
 const Profile = React.lazy(() => import("./components/Pages/Profile/Profile"));
@@ -55,7 +58,20 @@ function App({ isUserAuthenticated, dispatch }) {
                 <Navbar />
             </header>
             <main>
-                <Suspense fallback={<Spinner animation="border" />}>
+                <Suspense
+                    fallback={
+                        <div
+                            style={{ height: "100vh" }}
+                            className="w-100 d-flex align-items-center justify-content-center bg-dark"
+                        >
+                            <SVG
+                                className="bg-dark"
+                                svg={loader}
+                                size="10rem"
+                            />
+                        </div>
+                    }
+                >
                     <Switch>
                         <RedirectRoute
                             exact
@@ -80,6 +96,13 @@ function App({ isUserAuthenticated, dispatch }) {
                         />
                     </Switch>
                 </Suspense>
+                <Button
+                    size="lg"
+                    className="rounded-circle position-absolute"
+                    variant="danger"
+                >
+                    <FiMail size="3rem" />
+                </Button>
             </main>
         </Router>
     );

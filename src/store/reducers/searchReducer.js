@@ -207,7 +207,6 @@ export default function reducer(state = initialState, action) {
                 draft.inputValue = payload;
                 break;
             case RESET_STATE_AND_FOCUS_INPUT:
-                console.log("Heyt");
                 cpxStateResetState(draft);
                 draft.inputRef.focus();
                 break;
