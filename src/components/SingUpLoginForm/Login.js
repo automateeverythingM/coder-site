@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, Container, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../../firebase";
 import { setFetchError } from "../../store/reducers/fetchError";
 import { setCurrentUser } from "../../store/reducers/userReducer";
-import LoginSignupButtons from "./LoginSignupButtons";
+import LoginSignUpButtons from "./LoginSignupButtons";
 import sleep from "./sleep";
 
 const container = css`
@@ -101,7 +101,7 @@ const Login = ({ serverFetchError, dispatch }) => {
                 >
                     Forgot your password?
                 </Link>
-                <LoginSignupButtons
+                <LoginSignUpButtons
                     submitting={submitting}
                     setSubmitting={setSubmitting}
                 />
@@ -109,7 +109,7 @@ const Login = ({ serverFetchError, dispatch }) => {
                 <div className="text-center mt-2">
                     Don`t have account?{" "}
                     <b>
-                        <Link className="text-warning" to="/signup">
+                        <Link className="text-warning" to="/register">
                             Sign up
                         </Link>
                     </b>

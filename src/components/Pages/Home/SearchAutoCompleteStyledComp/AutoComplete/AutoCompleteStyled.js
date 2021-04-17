@@ -12,6 +12,7 @@ function AutoCompleteStyled({
     dropdownSelector,
     dispatch,
 }) {
+    console.log("🚀 ~ file: AutoCompleteStyled.js ~ line 15 ~ data", data);
     return (
         <UlDropdown
             position="absolute"
@@ -38,4 +39,6 @@ const mapStateToProps = ({ searchReducer }) => ({
     dropdownSelector: searchReducer.dropdownSelector,
     autocompleteList: searchReducer.autocompleteList,
 });
+
+// export default React.memo(AutoCompleteStyled);
 export default connect(mapStateToProps)(AutoCompleteStyled);

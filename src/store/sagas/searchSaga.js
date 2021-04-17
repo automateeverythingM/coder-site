@@ -17,7 +17,7 @@ function* getAutoCompleteList(action) {
                     .startsWith(payload.toLowerCase());
             });
         });
-    yield (finished = finished.slice(0, 10));
+    finished = finished.slice(0, 10);
 
     yield put(setAutocompleteList(finished));
 }

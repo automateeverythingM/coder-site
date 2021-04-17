@@ -22,7 +22,6 @@ const Login = React.lazy(() => import("./components/SingUpLoginForm/Login"));
 const Signup = React.lazy(() => import("./components/SingUpLoginForm/Signup"));
 const Profile = React.lazy(() => import("./components/Pages/Profile/Profile"));
 const Home = React.lazy(() => import("./components/Pages/Home"));
-const Notification = React.lazy(() => import("react-notifications-component"));
 
 function App({ isUserAuthenticated, dispatch }) {
     const addListener = async () => {
